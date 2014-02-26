@@ -5,8 +5,8 @@ angular.module('tilosAdmin').config(['$routeProvider', function ($routeProvider)
     templateUrl: 'views/episode.html',
     controller: 'EpisodeCtrl',
       resolve: {
-          data: function ($routeParams, Episodes) {
-              return Episodes.get({id: $routeParams.id});
+          data: function ($route, Episodes) {
+              return Episodes.get({id: $route.current.params.id});
           },
       }
 
