@@ -78,6 +78,30 @@ class ShowTest extends TestBase
 
     }
 
+
+    public function testEpisodeGetByAlias()
+    {
+        //when
+        $this->request->setUri("/api/show/goodshow/episode/2013/01/28");
+        $this->request->setMethod("get");
+        $this->routeMatch->setParam('action', 'getEpisodeByAlias');
+        $this->routeMatch->setParam('show', 'goodshow');
+        $this->routeMatch->setParam('year', '2013');
+        $this->routeMatch->setParam('month', '01');
+        $this->routeMatch->setParam('day', '28');
+
+
+        $result = $this->controller->dispatch($this->request);
+        $response = $this->controller->getResponse();
+        //then
+        $episode = $result->getVariables();
+        //var_dump($episode);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertTrue(count($response) > 0);
+        $this->assertEquals(1, $episode['id']);
+
+    }
 }
 
 ?>

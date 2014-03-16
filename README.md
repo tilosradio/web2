@@ -6,13 +6,10 @@ The new, recreated webpage of Tilos Radio
 Directories and files in the repo
 ---------------------------------
 
-* __www__: The root of the public web folder
-* __config__: Config of the ZF2 backend
-* __module__: The code of the backend
-* __vendor__: directories for the php libraries managed by the composer dependency manager (see below to create it)
-* __yeaoman__: directory of the frontend application
-* __yeoman/app__: raw fronted source files (HTML, JS, CSS/SCSS)
-* __yeoman/app/bower_components__: client side dependencies managed with bower, user ```bower update``` regulary to regenerate this folder
+* __backend__: Zend framework based REST backend (frontend and admin modules)
+* __frontend__: Angularjs based frontend application
+* __admin__: Angularjs based admin application.
+
 
 
 How to run

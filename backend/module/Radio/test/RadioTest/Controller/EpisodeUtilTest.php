@@ -53,23 +53,46 @@ class EpisodeUtilTest extends \RadioTest\Controller\TestBase {
         $s = [];
         $s['hourFrom'] = 12;
         $s['minFrom'] = 30;
+        $s['duration'] = 90;
         $s['weekType'] = 1;
         $s['weekDay'] = 2;
-        $this->assertEquals("minden szerda 12:30", EpisodeUtil::schedulingMessage($s));
+        $this->assertEquals("minden szerda 12:30-14:00", EpisodeUtil::schedulingMessage($s));
 
         $s = [];
         $s['hourFrom'] = 8;
         $s['minFrom'] = 30;
         $s['weekType'] = 2;
         $s['weekDay'] = 1;
-        $this->assertEquals("minden második kedd 8:30", EpisodeUtil::schedulingMessage($s));
+        $s['duration'] = 121;
+        $this->assertEquals("minden második kedd 8:30-10:31", EpisodeUtil::schedulingMessage($s));
 
         $s = [];
         $s['hourFrom'] = 8;
         $s['minFrom'] = 0;
         $s['weekType'] = 2;
         $s['weekDay'] = 1;
-        $this->assertEquals("minden második kedd 8:00", EpisodeUtil::schedulingMessage($s));
+        $s['duration'] = 90;
+        $this->assertEquals("minden második kedd 8:00-9:30", EpisodeUtil::schedulingMessage($s));
+
+        $s = [];
+        $s['hourFrom'] = 23;
+        $s['minFrom'] = 45;
+        $s['weekType'] = 2;
+        $s['weekDay'] = 1;
+        $s['duration'] = 30;
+        $this->assertEquals("minden második kedd 23:45-0:15", EpisodeUtil::schedulingMessage($s));
+    }
+
+    public function testM3uLink(){
+        $date = new \DateTime();
+        $end = new \DateTime();
+        $date->setTimestamp(mktime(12,30,0,10,23,2004));
+        $end->setTimestamp(mktime(14,00,0,10,23,2004));
+        $this->assertEquals('m3u/20041023/1230/1400/tilos.m3u',EpisodeUtil::m3uUrlLinkFromDate($date,$end));
+
+        $date->setTimestamp(mktime(3,4,0,1,2,2004));
+        $end->setTimestamp(mktime(4,35,0,1,2,2004));
+        $this->assertEquals('m3u/20040102/0304/0435/tilos.m3u',EpisodeUtil::m3uUrlLinkFromDate($date,$end));
     }
 
 }

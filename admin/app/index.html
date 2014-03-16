@@ -45,6 +45,7 @@
       <ul ng-show="user" class="nav navbar-nav">
         <li ng-show="user.role.name == 'admin'" active-link="active"><a ng-href="/authors">Szerzők</a></li>
         <li ng-show="user.role.name == 'admin'" active-link="active"><a ng-href="/shows">Műsorok</a></li>
+          <li ng-show="user.role.name == 'admin'" active-link="active"><a ng-href="/pages">Oldalak</a></li>
         <li active-link="active"><a ng-click="logout()">Logout</a></li>
       </ul>
     </div>

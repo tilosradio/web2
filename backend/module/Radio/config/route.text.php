@@ -16,7 +16,7 @@ return array(
         'type' => 'Radio\Util\CustomSegmentRouter',
         'options' => array(
             'method' => 'GET',
-            'route' => '/api/v0/text/[:type]/list',
+            'route' => '/api/v0/text/:type/list',
             'permission' => 'guest',
             'defaults' => array(
                 'controller' => 'Radio\Controller\Text',

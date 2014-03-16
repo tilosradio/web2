@@ -51,26 +51,48 @@ class M3u extends AbstractActionController
     {
         $out = "#EXTM3U\n";
         $start = (int)$this->params()->fromRoute("from");
-        $from = M3u::getPrevHalfHour($start);
         $duration = (int)$this->params()->fromRoute("duration");
 
-        foreach ($this->getMp3Links($start, $duration) as $resource) {
-            $d = $resource['datearray'];
-            $timestr = sprintf("%02d%02d", $d['hours'], $d['minutes']);
-            $out .= sprintf("#EXTINF:1805,Tilos %02d.%02d.%02d %s\n", $d['year'], $d['mon'], $d['mday'], $timestr);
-            $out .= $resource['file'] . "\n";
-        }
+    	$response = $this->getM3Ufile($start, $duration);
+    	return $response;
+    }
 
-        $response = $this->getResponse();
-        $response->setStatusCode(200);
-        $response->getHeaders()->addHeaders(array(
+	public function anotherlinkAction()
+	{
+		$date = (int)$this->params()->fromRoute("date");
+		$from = $this->params()->fromRoute("from");
+		$to = $this->params()->fromRoute("to");
+
+
+		$start = (strtotime($date." ".$from));
+		$end = (strtotime($date." ".$to));
+		$duration = round(abs($end - $start) / 60,2);
+
+		$response = $this->getM3Ufile($start, $duration+1);
+		return $response;
+	}
+
+	public function getM3Ufile($start, $duration)
+	{
+        $out="";
+		$from = M3u::getPrevHalfHour($start);
+		foreach ($this->getMp3Links($start, $duration) as $resource) {
+			$d = $resource['datearray'];
+			$timestr = sprintf("%02d%02d", $d['hours'], $d['minutes']);
+			$out .= sprintf("#EXTINF:1805,Tilos %02d.%02d.%02d %s\n", $d['year'], $d['mon'], $d['mday'], $timestr);
+			$out .= $resource['file'] . "\n";
+		}
+
+		$response = $this->getResponse();
+		$response->setStatusCode(200);
+		$response->getHeaders()->addHeaders(array(
                 'Content-Type' => 'audio/x-mpegurl; charset=utf-8',
                 'Content-Disposition' => sprintf("filename=\"tilos-%02d%02d%02d-%d-%d.m3u\"", $d['year'], $d['mon'], $d['mday'], $timestr, $from))
-        );
+		);
 
-        $response->setContent($out);
-        return $response;
-    }
+		$response->setContent($out);
+		return $response;
+	}
 
     function chunked_copy($from)
     {

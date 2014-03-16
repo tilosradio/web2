@@ -3,13 +3,14 @@ namespace RadioTest\Controller;
 
 use RadioTest\Bootstrap;
 use PHPUnit_Framework_TestCase;
+use Radio\Formatter\Formatter;
 
 class FormatterTest extends \PHPUnit_Framework_TestCase {
 
     protected $formatter;
 
     protected function setUp() {
-        $this->formatter = new \Radio\Util\Formatter();
+        $this->formatter = new Formatter();
     }
 
     public function testLegacy() {

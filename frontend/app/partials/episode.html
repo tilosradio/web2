@@ -1,5 +1,5 @@
 <section class="col-md-9 main" role="main">
-            <h2 class="bordered blue"><a ng-href="/show/{{episode.show.alias}}">{{episode.show.name}}</a> adásnapló - {{episode.plannedFrom * 1000|
+            <h2 class="bordered blue top"><a ng-href="/show/{{currentShow.alias}}">{{currentShow.name}}</a> - adásnapló - {{episode.plannedFrom * 1000|
     date:yyyy.MM.dd}}
             <a ng-show="episode.m3uUrl" class="pull-right listen-show" ng-href="{{episode.m3uUrl}}" target="_self">
             Meghallgat
@@ -7,9 +7,10 @@
   <h1 class="ubuntu">{{episode.text.title}}</h1>
 
   <span ng-bind-html="episode.text.formatted"></span>
+
 </section>
 <aside class="col-md-3">
 
-    
+
   <div ng-include src="'partials/sidebar_right.html'"></div>
 </aside>

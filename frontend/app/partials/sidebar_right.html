@@ -1,5 +1,5 @@
 <div class="box  actual-shows-box">
-		<h2>{{now| date: "yyyy.MM.dd"}}</h2>
+		<h2>{{now| date: "yyyy.MM.dd."}}</h2>
 		<table class="table actual-shows" >
 			<tr ng-repeat="episode in episodes" class="{{(current.show.id == episode.show.id) && 'actual'|| ''}}" >
 				<td><a href="#/show/{{episode.show.alias}}">{{episode.show.name}}<a></td>

@@ -98,6 +98,14 @@ angular.module('tilosApp')
         var to = new Date(timestamp * 1000);
         to.setToDayEnd();
         $http.get($server + '/api/v0/episode?start=' + from.getTimestamp() + '&end=' + to.getTimestamp(), {cache: true}).success(function (data) {
+        	for(var i=0;i<data.length;i++){
+	          	var fromDate = new Date(data[i].plannedFrom*1000);
+	          	var toDate = new Date(data[i].plannedTo*1000);
+	          	var fromDateString = fromDate.getFullYear() + ('0' + (fromDate.getMonth()+1)).slice(-2) + ('0' + fromDate.getDate()).slice(-2);
+	          	var fromDateHours = ('0' + fromDate.getHours()).slice(-2) + ('0' + fromDate.getMinutes()).slice(-2);
+	          	var toDateHours = ('0' + toDate.getHours()).slice(-2) + ('0' + toDate.getMinutes()).slice(-2);
+	          	data[i].newUrl = $server + "/api/v0/m3u/" + fromDateString + "/" + fromDateHours + "/" + toDateHours + ".m3u";
+			  }
           $scope.episodes = data;
         });
       };

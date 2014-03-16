@@ -307,7 +307,7 @@ module.exports = function (grunt) {
       },
       php: {
         expand: true,
-        cwd: "../backend",
+        cwd: '../backend',
         dest: 'dist',
         src: [
           'module/Radio/**/*',
@@ -316,7 +316,7 @@ module.exports = function (grunt) {
           'init_autoloader.php',
           'composer.php',
           'www/backend.php',
-	  'www/stream.php'
+	        'www/stream.php'
         ]
       },
       chat: {
@@ -406,7 +406,7 @@ module.exports = function (grunt) {
     'mocha'
   ]);
 
-  grunt.registerTask('createCacheDir', "Create cached dir for the doctrine", function () {
+  grunt.registerTask('createCacheDir', 'Create cached dir for the doctrine', function () {
     grunt.file.mkdir('dist/data/DoctrineORMModule/', 511);
   });
 

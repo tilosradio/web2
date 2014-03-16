@@ -6,6 +6,7 @@ use DoctrineORMModule\Proxy\__CG__\Radio\Entity\TextContent;
 use Radio\Mapper\ArrayFieldSetter;
 use Radio\Mapper\ChildObject;
 use Radio\Mapper\DateField;
+use Radio\Mapper\EpisodeURLField;
 use Radio\Mapper\Field;
 use Radio\Mapper\InternalLinkField;
 use Radio\Mapper\ListMapper;
@@ -79,6 +80,7 @@ class Episode extends BaseController
         $em = $m->addMapper(new ChildObject("text"));
         $em->addMapper(new Field("title"));
         $em->addMapper(new DateField("created"));
+        $m->addMapper(new EpisodeURLField());
         return $m;
     }
 

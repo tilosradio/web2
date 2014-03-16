@@ -35,7 +35,7 @@ class AuthTest extends TestBase {
 
         //shoud be ok
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertContains("generated", $model['message']);
+        $this->assertContains("belépőkód", $model['message']);
         $this->assertTrue($model['success']);
 
         $this->em->createQueryBuilder();
@@ -82,7 +82,7 @@ class AuthTest extends TestBase {
 
         //shoud be ok
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertContains("generated", $model['message']);
+        $this->assertContains("belépőkód", $model['message']);
         $this->assertTrue($model['success']);
 
         $this->em->createQueryBuilder();
@@ -143,7 +143,7 @@ class AuthTest extends TestBase {
         $model = $this->event->getResult()->getVariables();
 
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertContains("does not exist", $model['error']);
+        $this->assertContains("nem ismerem", $model['error']);
     }
 
 

@@ -21,6 +21,16 @@ return array(
                 'action' => 'download'),
         )
     ),
+	'm3u-anothercreator' => array(
+		'type' => 'Segment',
+		'options' => array(
+			'route' => '/m3u/[:date]/[:from]/[:to]/tilos.m3u',
+			'defaults' => array(
+				'controller' => 'Radio\Controller\M3u',
+				'action' => 'anotherlink'),
+		)
+	),
+
     'show-rss' => array(
         'type' => 'Segment',
         'options' => array(

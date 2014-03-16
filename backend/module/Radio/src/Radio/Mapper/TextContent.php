@@ -8,7 +8,7 @@
 
 namespace Radio\Mapper;
 
-use Radio\Util\Formatter;
+use Radio\Formatter\Formatter;
 
 /**
  * Simple field mapping based on name.

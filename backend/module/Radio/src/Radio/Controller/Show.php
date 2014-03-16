@@ -80,23 +80,6 @@ class Show extends BaseController
         return $this->getEntityList("\Radio\Entity\Show");
     }
 
-    /**
-     * @SWG\Api(
-     *   path="/show/{id}",
-     * @SWG\Operation(
-     *     method="GET",
-     *     summary="Return information about a specific radioshow",
-     * @SWG\Parameters(
-     * @SWG\Parameter(
-     *           name= "id",
-     *           description="Id of the show",
-     *           paramType="path",
-     *           type="string"
-     *        )
-     *     )
-     *   )
-     * )
-     */
     public function get($e)
     {
         $id = $this->getIdentifier($e->getRouteMatch(),$e->getRequest());
@@ -114,6 +97,40 @@ class Show extends BaseController
         $mapper = MapperFactory::shortEpisodeElementMapper(['baseUrl' => $this->getServerUrl()]);
         $mapper->map($episodes, $result, new ArrayFieldSetter());
 
+        return new JsonModel($result);
+    }
+
+    public function getEpisodeByAlias(){
+        $alias = $this->params()->fromRoute("show");
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')->from('\Radio\Entity\Show', 's');
+        $qb->where('s.alias = :alias');
+        $q = $qb->getQuery();
+        $q->setParameter("alias", $alias);
+        $res = $q->getArrayResult();
+        if (!$res) {
+            $this->getResponse()->setStatusCode(404);
+            return new JsonModel(array("error" => "Show is missing"));
+        } else {
+            $res = $res[0];
+        }
+        $id = $res['id'];
+
+        $month = $end = $this->params()->fromRoute("month");
+        $day = $this->params()->fromRoute("day");
+        $year = $this->params()->fromRoute("year");
+        $start = mktime(0,0,0,$month,$day,$year);
+        $end = mktime(23,23,59,$month,$day,$year);
+
+        $episodes = EpisodeUtil::getEpisodeTimes($this->getEntityManager(), $start, $end, $id, true);
+
+        $result = [];
+        $mapper = MapperFactory::shortEpisodeElementMapper(['baseUrl' => $this->getServerUrl()]);
+        $mapper->map($episodes, $result, new ArrayFieldSetter());
+        if ($result) {
+            $result = $result[0];
+        }
         return new JsonModel($result);
     }
 

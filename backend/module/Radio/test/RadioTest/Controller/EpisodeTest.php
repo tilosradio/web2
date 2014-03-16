@@ -37,6 +37,7 @@ class EpisodeTest extends TestBase {
         $episodes = $result->getVariables();
         //var_dump($episodes);
         $this->assertTrue(count($episodes) > 0);
+        $this->assertNotEmpty($episodes[0]['url']);
     }
 
     public function testEpisodeNext() {
@@ -56,8 +57,6 @@ class EpisodeTest extends TestBase {
 
 
     public function testEpisodeGet() {
-        $start = mktime(10, 0, 0, 10, 28, 2013);
-        $end = mktime(12, 0, 0, 10, 28, 2013);
         //when
         $this->request->setUri("/api/episode/1");
         $this->request->setMethod("get");

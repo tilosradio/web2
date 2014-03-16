@@ -36,4 +36,16 @@ return array(
             )
         )
     ),
+    'show-episode-by-alias' => array(
+        'type' => 'Radio\Util\CustomSegmentRouter',
+        'options' => array(
+            'method' => 'GET',
+            'route' => '/api/v0/show/:show/episode/:year/:month/:day',
+            'permission' => 'guest',
+            'defaults' => array(
+                'controller' => 'Radio\Controller\Show',
+                'action' => 'getEpisodeByAlias'
+            )
+        )
+    ),
 );

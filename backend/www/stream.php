@@ -88,7 +88,6 @@ class Mp3Streamer
         //check the files and caclucate the sizes
         $filesize = 0;
         foreach ($this->getMp3Links($start, $duration) as $resource) {
-            //passthru($resource['file']);
             $fn = "../archive-files/online" . $resource['filename'];
             if (!file_exists($fn)) {
                 header('HTTP/1.0 404 Not Found');

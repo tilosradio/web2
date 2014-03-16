@@ -29,7 +29,7 @@ class Auth extends BaseController
         $data = Json::decode($this->getRequest()->getContent(), Json::TYPE_ARRAY);
         if (!array_key_exists('username', $data) || !array_key_exists('username', $data)) {
             $this->getResponse()->setStatusCode(400);
-            return new JsonModel(array("error" => "Bad request: User and password is required."));
+            return new JsonModel(array("error" => "Bad request: felhasználónév és jelszó szükséges."));
         }
 
         $adapter = $this->getAuthService()->getAdapter();
@@ -43,7 +43,7 @@ class Auth extends BaseController
             return $this->success();
         } else
             $this->getResponse()->setStatusCode(401);
-        return new JsonModel(array('success' => false, 'error' => "Authentication error"));
+        return new JsonModel(array('success' => false, 'error' => "Hitelesítési hiba"));
     }
 
     public function logout()
@@ -82,7 +82,7 @@ class Auth extends BaseController
 
         if (!array_key_exists('email', $data)) {
             $this->getResponse()->setStatusCode(400);
-            return new JsonModel(array("error" => "email field is requried"));
+            return new JsonModel(array("error" => "Adj meg e-mail címet."));
         }
 
 
@@ -124,7 +124,7 @@ class Auth extends BaseController
             }
             if (empty($user)) {
                 $this->getResponse()->setStatusCode(400);
-                return new JsonModel(array("error" => "Email does not exist in DB."));
+                return new JsonModel(array("error" => "Ezt a mail-t nem ismerem."));
 
             }
         } else {
@@ -149,7 +149,7 @@ class Auth extends BaseController
 
             //sending mail
             $mail = new Mail\Message();
-            $body = "\n\nA " . $user->getUsername() . " user jelszavának megváltoztatása a következő linken keresztül lehetséges: " .
+            $body = "A Te user-neved: \n\nA " . $user->getUsername() . "! Jelszavad megadhatod ezen a linken: " .
                 $link;
             $mail->setBody($body);
             $mail->setFrom('webmester@tilos.hu', 'Tilos gépház');
@@ -159,7 +159,7 @@ class Auth extends BaseController
             $transport = $this->getServiceLocator()->get('Radio\Mail\Transport');
             $transport->send($mail);
 
-            return new JsonModel(array("success" => true, "message" => "Token has been generated and sent."));
+            return new JsonModel(array("success" => true, "message" => "Új belépőkód elküldve."));
             //regenerate token and send it in a mail
         } else {
             $token = $data["token"];
@@ -173,25 +173,25 @@ class Auth extends BaseController
             $results = $q->getArrayResult();
             if (count($results) == 0) {
                 $this->getResponse()->setStatusCode(400);
-                return new JsonModel(array("error" => "No such valid token."));
+                return new JsonModel(array("error" => "Ezen a címen nincs érvényes belépőkód."));
             }
             $token = $results[0];
             $now = new \DateTime();
             $now = $now->sub(new \DateInterval("PT30M"));
             if ($now->getTimestamp() > $results[0]['created']->getTimestamp()) {
                 $this->getResponse()->setStatusCode(400);
-                return new JsonModel(array("error" => "Token is too old"));
+                return new JsonModel(array("error" => "Ez a belépőkód már lejárt."));
             }
 
             if (!array_key_exists('password', $data)) {
                 $this->getResponse()->setStatusCode(400);
-                return new JsonModel(array("error" => "Password field is empty."));
+                return new JsonModel(array("error" => "Üres a jelszó helye."));
             }
 
             $password = $data['password'];
             if (strlen($password) < 9) {
                 $this->getResponse()->setStatusCode(400);
-                return new JsonModel(array("error" => "Password is too short (min size: 9)."));
+                return new JsonModel(array("error" => "A jelszó túl rövid (min 9 karakter)."));
             }
             $user->setPassword($password);
             $this->getEntityManager()->persist($user);
@@ -199,7 +199,7 @@ class Auth extends BaseController
             $q->setParameter("user", $user);
             $q->execute();
             $this->getEntityManager()->flush();
-            return new JsonModel(array("success" => true, "message" => "password has been changed"));
+            return new JsonModel(array("success" => true, "message" => "a jelszó megváltoztatva"));
             //check token and change the password
         }
     }

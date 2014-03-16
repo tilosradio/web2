@@ -1,5 +1,5 @@
 <?php
-namespace Radio\Util;
+namespace Radio\Formatter;
 
 class Formatter
 {

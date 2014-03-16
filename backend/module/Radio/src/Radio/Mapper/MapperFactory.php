@@ -75,10 +75,12 @@ class MapperFactory {
 
 
         $em = $m->addMapper(new ChildCollection("episodes"));
+        $em->addMapper(new EpisodeURLField());
         $em->addMapper(new Field("id"));
         $em->addMapper(new DateField("plannedFrom"));
         $em->addMapper(new DateField("plannedTo"));
         $em->addMapper(new InternalLinkField("m3uUrl", $context['baseUrl']));
+        $em->addMapper(new Field("url", $context['baseUrl']));
         $emt = $em->addMapper(new ChildObject("text"));
         $emt->addMapper(new Field("title"));
         $emt->addMapper(new Field("format"));
@@ -130,6 +132,8 @@ class MapperFactory {
         $m->addMapper(new DateField("plannedFrom"));
         $m->addMapper(new DateField("plannedTo"));
         $m->addMapper(new InternalLinkField("m3uUrl", $context['baseUrl']));
+        $m->addMapper(new InternalLinkField("url", $context['baseUrl']));
+        $m->addMapper(new EpisodeURLField());
         $em = $m->addMapper(new ChildObject("text"));
         $em->addMapper(new Field("title"));
         $em->addMapper(new DateField("created"));

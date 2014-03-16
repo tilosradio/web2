@@ -1,0 +1,12 @@
+<section class="col-md-9 main" role="main" >
+    <h1>Oldal lista</h1>
+    <table class="tbl">
+        <tr data-ng-repeat="page in pages">
+            <td><a ng-href="/page/{{page.id}}">{{page.title}}</a></td>
+            <td><a ng-show="user && user.role.name == 'admin'" class="btn btn-danger" ng-href="/edit/page/{{page.id}}">Szerkesztés</a></td>
+        </tr>
+    </table>
+
+    </h1>
+
+</section>

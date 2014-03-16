@@ -34,11 +34,6 @@ angular.module('tilosApp')
           $scope.show.sharecount = data.data[0].share_count;
         }
       });
-
-
-
-
-
     });
 
   }

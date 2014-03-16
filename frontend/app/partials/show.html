@@ -1,5 +1,5 @@
 <section class="col-md-6 main" role="main">
-    <h2 class="bordered blue">Műsor:</h2>
+    <h2 class="bordered blue top">Műsor:</h2>
 
     <h1 class="ubuntu">{{show.name}}</h1>
 
@@ -25,9 +25,9 @@
 
     <div class="panel panel-default episode-box" ng-repeat="episode in show.episodes">
         <div class="panel-heading">
-            <b>
-                {{episode.plannedFrom * 1000| date: 'yyyy.MM.dd'}}
-                <span ng-if="episode.text"><a ng-href="/episode/{{episode.id}}">{{episode.text.title}}</a></span>
+            <b><a ng-href="{{episode.url}}">
+                {{episode.plannedFrom * 1000| date: 'yyyy.MM.dd.'}}
+                <span ng-if="episode.text">{{episode.text.title}}</a></span>
             </b>
 
             <a ng-show="episode.m3uUrl" class="pull-right listen-show" ng-href="{{episode.m3uUrl}}" target="_self">
@@ -38,10 +38,11 @@
 <!--<div ng-if="episode.text" class="panel-body">
 <span ng-bind-html="episode.text.formatted"></span>
 </div>-->
+
     </div>
-    <ul class="pager">
-        <li class="cursorPointer"><a ng-click="prev()">&larr; Korábbi adások</a></li>
-        <li class="cursorPointer" ng-if="currentShowPage != 0"><a ng-click="next()">Későbbi adások &rarr;</a></li>
+    <ul class="pager episode-box-pager">
+        <li class="cursorPointer prev-link"><a ng-click="prev()">&larr; Korábbi adások</a></li>
+        <li class="cursorPointer next-link" ng-if="currentShowPage != 0"><a ng-click="next()">Későbbi adások &rarr;</a></li>
     </ul>
 </section>
 

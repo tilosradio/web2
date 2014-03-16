@@ -31,8 +31,8 @@ class Text extends \Radio\Controller\BaseController
 
             $mapper = new ObjectMapper(new ObjectFieldSetter());
             $f = new Field("title");
-            $mapper->addMapper($f->required());
-            $mapper->addMapper(new Field("content"));
+            $mapper->addMapper(Field::of("content")->required());
+            $mapper->addMapper(Field::of("alias")->required());
 
             $mapper->map($data, $text);
             $text->setModified(new \DateTime());

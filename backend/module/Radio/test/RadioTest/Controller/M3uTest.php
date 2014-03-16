@@ -41,8 +41,9 @@ class ControllerTest extends TestBase {
 
 
         $body = preg_split("/\n/", $response->getContent());
-        $this->assertEquals(8, sizeof($body));
-        $this->assertContains("20130204-1900", $body[4]);
+        //var_dump($body);
+        $this->assertEquals(7, sizeof($body));
+        $this->assertContains("2013.02.04 1930", $body[4]);
     }
 }
 

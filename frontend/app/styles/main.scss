@@ -27,7 +27,7 @@ h1{
   }
 }
 h2{
-	font-family: "Open Sans",sans-serif;
+  font-family: "Open Sans",sans-serif;
     font-size: 20px;
     a{
       color: inherit;
@@ -46,20 +46,20 @@ hr{
 }
 
 .ubuntu{
-	font-family: "Ubuntu Condensed",sans-serif;
+  font-family: "Ubuntu Condensed",sans-serif;
 }
 
 @mixin bordered{
-	border-bottom: 1px solid $primary-color;
-	padding-bottom: 1em;
+  border-bottom: 1px solid $primary-color;
+  padding-bottom: 1em;
 }
 
 .bordered{
-	@include bordered;
+  @include bordered;
 }
 
 .blue{
-	color: $lightblue;
+  color: $lightblue;
 }
 
 .panel{
@@ -185,7 +185,9 @@ img{
 
 
 // header navigation
-
+#adoszam{
+	color:$yellow;
+}
 
 .navbar{
   .scrolled &{
@@ -213,7 +215,7 @@ img{
 
           a:first-child{
             @media all and (min-width: $screen-sm){
-		         	padding-left:0;
+              padding-left:0;
             }
           }
       }
@@ -291,7 +293,7 @@ img{
           text-decoration: none;
         }
       }
-    } 
+    }
   }
 }
 
@@ -326,6 +328,15 @@ img{
     }
 }
 
+.englishLink{
+  background-color:$gray-darken;
+}
+
+.englishLink a{
+  color:#797979;
+  font-size:16px;
+}
+
 // header navigation end
 // Header
 
@@ -349,75 +360,75 @@ img{
         font-weight: 300;
         margin:  0;
     }
-	.radio-player{
-		background: #353434;
-		background: rgba(white, 0.1);
-		padding-top: 10px;
-		width: 100%;
-		@include clearfix();
-		.scrolled &{
-			padding-top: 0;
-		}
-		h3{
-			font-size: 18px;
-			font-family: "Open Sans",sans-serif;
-			font-weight: bold;
+  .radio-player{
+    background: #353434;
+    background: rgba(white, 0.1);
+    padding-top: 10px;
+    width: 100%;
+    @include clearfix();
+    .scrolled &{
+      padding-top: 0;
+    }
+    h3{
+      font-size: 18px;
+      font-family: "Open Sans",sans-serif;
+      font-weight: bold;
       margin: 15px;
-			padding: 0;
-			text-align: center;
-			@include clearfix();
-			.scrolled &{
+      padding: 0;
+      text-align: center;
+      @include clearfix();
+      .scrolled &{
         margin-bottom: 10px;
         margin-right: 0;
         margin-left: 0;
-				text-align: left;
-			}
-  		a{
-  			color: white;
-  			display: block;
+        text-align: left;
+      }
+      a{
+        color: white;
+        display: block;
         line-height: 1.3em;
-  			margin-bottom: 5px;
-			  max-height: 46px;
-			  overflow: hidden;
-  			.scrolled &{
-  				float: left;
-  				font-size: 16px;
-  				margin-top: 2px;
-  				margin-right: 5px;
-  				text-overflow: ellipsis;
-  				white-space: nowrap;
-  				max-width: 76%;
-  			}
-  		}
+        margin-bottom: 5px;
+        max-height: 46px;
+        overflow: hidden;
+        .scrolled &{
+          float: left;
+          font-size: 16px;
+          margin-top: 2px;
+          margin-right: 5px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          max-width: 76%;
+        }
+      }
     }
      h4{
-			margin-top: 0;
-			padding: 0 10px;
-			text-align: left;
-			font-size: 16px;
-			font-family: "Open Sans",sans-serif;
-			.scrolled &{
-			 display: none;
-		  }
+      margin-top: 0;
+      padding: 0 10px;
+      text-align: left;
+      font-size: 16px;
+      font-family: "Open Sans",sans-serif;
+      .scrolled &{
+       display: none;
+      }
 
-		}
-		.radio-fromTo{
-			font-size: 20px;
-			font-weight: normal;
+    }
+    .radio-fromTo{
+      font-size: 20px;
+      font-weight: normal;
 
-		.scrolled &{
-			float: left;
-			font-size: 15px;
-			margin-top: 3px;
-		}
+    .scrolled &{
+      float: left;
+      font-size: 15px;
+      margin-top: 3px;
+    }
 
-		}
-		.radio-formatList{
-			padding-right: 0px;
+    }
+    .radio-formatList{
+      padding-right: 0px;
       .scrolled &{
         width: 40%;
       }
-		}
+    }
     .radio-info{
       .scrolled &{
         width: 60%;
@@ -511,7 +522,7 @@ img{
             display: block;
            .scrolled &{
             font-size: 20px;
-           } 
+           }
         }
         &:hover{
             text-decoration: none;
@@ -535,7 +546,7 @@ img{
 }
 
 .playerimg{
-	padding: 0px 10px 0px 10px;
+  padding: 0px 10px 0px 10px;
 }
 
 
@@ -544,12 +555,12 @@ img{
 
 
 .main{
-	h2{
-		border-bottom:1px solid #201f1f;
-		// margin-top:40px;
-		line-height:1.4em;
+  h2{
+    border-bottom:1px solid #201f1f;
+    // margin-top:40px;
+    line-height:1.4em;
     padding-bottom: 0.75em;
-	}
+  }
 }
 
 .program-guides{
@@ -895,10 +906,10 @@ a.icon-star, a.icon-star2{
     margin-top: 45px;
     padding-top: 100px;
     padding-bottom: 50px;
-   		 h2{
-			color: $footer-title;
-			font-size:16px;
-    	}
+       h2{
+      color: $footer-title;
+      font-size:16px;
+      }
 }
 
 .footer-nav{
@@ -937,119 +948,130 @@ a.icon-star, a.icon-star2{
 //Style of Archive
 
 #archiveTable{
-	.archiveShowName{
-			width:15%;
-	}
-	.archiveDesc{
-			width:55%;
-	}
-	.archiveTime{
-			width:10%;
-	}
-	.archiveAuth{
-			width:20%;
-	}
+  .archiveShowName{
+      width:15%;
+  }
+  .archiveAuth{
+      width:30%;
+  }
+  .archiveDesc{
+      width:45%;
+  }
+  .archiveTime{
+      width:10%;
+  }
+
 }
 
 
 #archiveTable tr:hover > td{
-	background-color: $gray-dark-hover-background;
+  background-color: $gray-dark-hover-background;
 }
 
 #archiveTable tr:hover a{
-	color: $actual-color;
-	font-weight: bold;
+  color: $actual-color;
+  font-weight: bold;
 }
 
 #archiveTable a{
-	color: $gray-dark-table;
-	font-weight: bold;
+  color: $gray-dark-table;
+  font-weight: bold;
 }
 
 #archiveTable a:hover{
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .archiveItalic{
-	color: $gray-light-table;
-	font-style:italic;
-	font-family: "Open Sans",sans-serif;
-	font-size: 16px;
+  color: $gray-light-table;
+  font-style:italic;
+  font-family: "Open Sans",sans-serif;
+  font-size: 16px;
 }
 
 .archiveShowName{
-	font-size: 18px;
-	width:20%;
+  font-size: 18px;
+  width:20%;
 }
 
 .datepicker{
   border:none;
-	font-family: "Open Sans",sans-serif;
-	font-size: 18px;
-	padding:10px;
-	width:175px;
-	margin-left:-6px;
+  font-family: "Open Sans",sans-serif;
+  font-size: 18px;
+  padding:10px;
+  width:175px;
+  margin-left:-6px;
 }
 
 .btn-success, .btn-success:hover{
-	background-color:$yellow;
-	border:1px solid $yellow;
+  background-color:$yellow;
+  border:1px solid $yellow;
 }
 
 .btn:hover, .btn:focus{
-	i{
-		color:$primary-color;
-	}
+  i{
+    color:$primary-color;
+  }
 }
 .DatePicker{
   display: inline-block;
   float: left;
-	button.ChooseDate{
-		background:transparent none;
-	}
+  button.ChooseDate{
+    background:transparent none;
+  }
 }
 
 input.datepicker {
-	background:transparent none;
+  background:transparent none;
 }
 
 .pager{
   float: right;
   font-size: 14px;
   margin: 8px 0;
+  &.episode-box-pager{
+    float: none;
+    .prev-link{
+      float: left;
+    }
+    .next-link{
+      float: right;
+    }
+  }
 }
+
 .pager li > a, .pager li > span{
-	border-radius:0;
-	border:none;
-	background:transparent none;
+  border-radius:0;
+  border:none;
+  background:transparent none;
 }
 
 
 .pager li > a:hover{
-	background:white none;
+  background:white none;
 }
 
 .btn:hover{
-	color:$gray-light;
+  color:$gray-light;
 }
 
 .navbar-default .navbar-nav > li.highlight > a {
-	color: $yellow;
+  color: $yellow;
 }
 
 #plaza{
-	border:none;
+  border:none;
 }
 
 .cursorPointer{
-	cursor: pointer;
+  cursor: pointer;
 }
 
 
 //News extra
 
 
-.news-lead{	
+.news-lead{
   margin-bottom: 1em;
   @include clearfix();
   h3{
@@ -1074,19 +1096,19 @@ input.datepicker {
     }
     @media all and (max-width: 450px) {
       float: none;
-      display: block;   
+      display: block;
     }
   }
 }
 
 .newsLink{
-	color: $gray-darken;
-	font-weight: normal;
+  color: $gray-darken;
+  font-weight: normal;
 }
 
 .newsLink:hover{
-	color: $gray-darken;
-	text-decoration: none;
+  color: $gray-darken;
+  text-decoration: none;
 }
 
 .episode-list {
@@ -1107,8 +1129,12 @@ input.datepicker {
       right: 15px;
       top: 10px;
     }
+    a{
+      color: $primary-color;
+    }
   }
 }
+
 
 .nav-tabs{
   > li {
@@ -1139,6 +1165,20 @@ input.datepicker {
 
 .label-episode{
   font-size: 100%;
+}
+
+.pageContent{
+	a{
+      color: inherit;
+    }
+}
+
+.backtoTopLink{
+	display:none;
+}
+
+.showedLink{
+	display:inherit !important;
 }
 
 // future feature

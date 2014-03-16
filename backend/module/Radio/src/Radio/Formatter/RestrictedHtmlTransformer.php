@@ -6,16 +6,20 @@
  * Time: 11:07 PM
  */
 
-namespace Radio\Util;
+namespace Radio\Formatter;
 
 
 use Zend\XmlRpc\Generator\DomDocument;
 
-class RestrictedHtmlTransformer {
+class RestrictedHtmlTransformer
+{
 
     protected $allowedTags = [];
 
-    function __construct() {
+    protected $customHandlers = [];
+
+    function __construct()
+    {
         libxml_use_internal_errors(true);
         $this->allowedTags['p'] = [];
         $this->allowedTags['html'] = [];
@@ -35,9 +39,12 @@ class RestrictedHtmlTransformer {
         $this->allowedTags['strong'] = [];
         $this->allowedTags['img'] = ['src'];
         $this->allowedTags['a'] = ['href'];
+
+        $this->customHandlers['iframe'] = array($this, 'iframe');
     }
 
-    public function format($content) {
+    public function format($content)
+    {
         $html = new \DomDocument('1.0', 'UTF-8');
         $html->substituteEntities = false;
         $html->preserveWhiteSpace = true;
@@ -49,14 +56,41 @@ class RestrictedHtmlTransformer {
 
     }
 
-    protected function parseElement($dom) {
+    protected function parseElement($node)
+    {
 
-        $node = $dom;
-        if ($node->nodeType == XML_ELEMENT_NODE) {
+
+        $dom = $node;
+        //visit child nodes
+        if ($dom->hasChildNodes()) {
+            $toVisit = [];
+            foreach ($dom->childNodes as $n) {
+                $toVisit[] = $n;
+            }
+            foreach ($toVisit as $n) {
+                $this->parseElement($n);
+            }
+        }
+
+
+        //check the current node
+
+        $allowed = false;
+
+        if (array_key_exists($node->nodeName, $this->customHandlers)) {
+            $allowed = call_user_func($this->customHandlers[$dom->nodeName], $dom);
+        }
+        if ($allowed === false && $node->nodeType == XML_ELEMENT_NODE && array_key_exists($dom->nodeName, $this->allowedTags)) {
+            $allowed = $this->allowedTags[$node->nodeName];
+        }
+
+
+        //check attributes
+        if ($node->nodeType == XML_ELEMENT_NODE && $allowed !== false) {
             if ($node->hasAttributes()) {
                 $toRemove = [];
                 foreach ($node->attributes as $attr) {
-                    if (!array_key_exists($node->nodeName, $this->allowedTags) || !in_array($attr->name, $this->allowedTags[$node->nodeName])) {
+                    if (!in_array($attr->name, $allowed)) {
                         $toRemove[] = $attr->name;
                     }
 
@@ -67,28 +101,23 @@ class RestrictedHtmlTransformer {
             }
 
         }
-        if ($dom->hasChildNodes()) {
-            $toVisit = [];
-            foreach ($dom->childNodes as $node) {
-                $toVisit[] = $node;
-            }
-            foreach ($toVisit as $node) {
-                $this->parseElement($node);
-            }
-        }
-        if (($dom->nodeType == XML_ELEMENT_NODE || $dom->nodeType == XML_CDATA_SECTION_NODE) && !array_key_exists($dom->nodeName, $this->allowedTags)) {
 
+
+        if (($dom->nodeType == XML_ELEMENT_NODE) && $allowed === false) {
             $parent = $dom->parentNode;
-
             if ($parent) {
                 $toAdd = [];
+
+                //the child nodes will be retained
                 if ($dom->hasChildNodes()) {
-                    foreach ($dom->childNodes as $node) {
-                        $toAdd[] = $node;
+                    foreach ($dom->childNodes as $n) {
+                        $toAdd[] = $n;
                     }
-                    foreach ($toAdd as $node) {
-                        $parent->insertBefore($node, $dom);
+                    foreach ($toAdd as $n) {
+                        $parent->insertBefore($n, $dom);
                     }
+                    $parent->removeChild($dom);
+                } else {
                     $parent->removeChild($dom);
                 }
 
@@ -97,5 +126,16 @@ class RestrictedHtmlTransformer {
         }
 
     }
+
+    public function iframe($dom)
+    {
+        $src = $dom->getAttribute('src');
+        if ($src && preg_match("/^(http(s)?:)?\/\/(www.)?youtube.com\/.*/", $src)) {
+            return array("src", "width", "height","frameborder","allowfullscreen");
+        } else {
+            return false;
+        }
+    }
+
 
 } 

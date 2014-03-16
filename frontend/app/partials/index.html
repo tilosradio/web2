@@ -1,8 +1,8 @@
 <section class="col-md-6 main" role="main">
-  <div class="program-guides">
+  <div ng-show="next.length" class="program-guides">
     <h2 class="blue">Műsorajánló</h2>
     <div class="episode-next episode-list" data-ng-repeat="episode in next">
-      <h3><a ng-href="/episode/{{episode.id}}">{{episode.text.title}}</a></h3>
+      <h3><a ng-href="{{episode.url}}">{{episode.text.title}}</a></h3>
       <p>
         {{episode.plannedFrom * 1000 | date:'MMMM dd. - HH:mm'}}
         <a class="label label-episode label-default pull-right" ng-href="/show/{{episode.show.alias}}">{{episode.show.name}}</a>
@@ -10,9 +10,9 @@
     </div>
   </div>
   <div class="recent-broadcast-schedule">
-    <h2 class="blue">Legfrissebb adásnaplók</h2>
+    <h2 class="blue top">Legfrissebb adásnaplók</h2>
     <div class="episode-last episode-list" data-ng-repeat="episode in last">
-        <h3><a ng-href="/episode/{{episode.id}}">{{episode.text.title}}</a></h3>
+        <h3><a ng-href="{{episode.url}}">{{episode.text.title}}</a></h3>
         <p>
           {{episode.plannedFrom * 1000 | date:'yyyy. MMMM dd.'}}
           <a class="label label-episode label-default pull-right" ng-href="/show/{{episode.show.alias}}">{{episode.show.name}}</a>

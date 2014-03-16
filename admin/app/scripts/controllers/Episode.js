@@ -21,8 +21,11 @@ angular.module('tilosAdmin').config(['$routeProvider', function ($routeProvider)
   });
 }]);
 angular.module('tilosAdmin')
-    .controller('EpisodeCtrl', function ($scope, Episodes, $routeParams, data) {
+    .controller('EpisodeCtrl', function ($scope, Episodes, $routeParams, data, $sce) {
       $scope.episode = data;
+      data.$promise.then(function(x){
+            $scope.episode.text.formatted = $sce.trustAsHtml(x.text.formatted);
+      });
     });
 
 angular.module('tilosAdmin')

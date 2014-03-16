@@ -59,6 +59,7 @@
     <script src="scripts/controllers/Episode.js"></script>
     <script src="scripts/controllers/News.js"></script>
     <script src="scripts/controllers/Main.js"></script>
+    <script src="scripts/controllers/Render.js"></script>
     <script src="scripts/services/FeedService.js"></script>
     <script src="scripts/filters/RssDate.js"></script>
 
@@ -93,7 +94,7 @@
 							<li active-link="active"><a href="/shows">Műsorok</a></li>
 							<li active-link="active"><a href="/archive">Archívum</a></li>
 							<li active-link="active"><a href="/page/hangtar">Hangtár</a></li>
-							<li active-link="active"><a href="/page/english">English</a></li>
+							<!-- <li active-link="active"><a href="/page/150">Krónika</a></li> -->
 							<li active-link="active" class="highlight"><a href="/page/segits">Támogass</a></li>
 							<li class="extra-menu">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><div class="more-button">+</div></a>
@@ -102,6 +103,7 @@
 			        		<li active-link="active"><a href="/page/info">Infó</a></li>
 			        		<li active-link="active"><a href="/page/elerhetoseg">Elérhetőség</a></li>
 			          </ul>
+			          <li active-link="active" class="englishLink"><a href="/page/english">EN</a></li>
 			        </li>
 							<li class="visible-xs"><a href="http://stream.tilos.hu/tilos.m3u" target="_blank"><span>256</span> mp3</a></li>
 							<li class="visible-xs"><a href="http://stream.tilos.hu/tilos_128.mp3.m3u" target="_blank"><span>128</span> mp3</a></li>
@@ -119,8 +121,8 @@
 						<div class="brand-holder col-md-6">
 							<a href="/">
 							<img src="/images/logo.png" alt="Tilos Rádió" class="logo">
-							<h1>Tilos Rádió</h1>
-							<h2 class="ubuntu">FM 90.3 <span>www.tilos.hu</span></h2>
+							<h1>Tilos Rádió 90.3</h1>
+							<h2><a href="/page/segits"><span id="adoszam">adószám: 18002454-2-43</a></span></h2>
 							</a>
 						</div>
 						<div class="col-md-6 radio-holder" ng-controller="EpisodesCtrl">
@@ -150,12 +152,18 @@
 		</div> <!-- navbar-fixed-top -->
 
 
-		<div class="container">
+		<div class="container" id="mainIndex">
             <ng-view autoscroll="true">
 			   <div class="row">
 			   </div> <!-- col-md-3 -->
             </ng-view>
 		</div><!-- /container -->
+
+		<div class="container backtoTopLink" ng-class="{showedLink:showLink}" ng-controller="RenderCtrl">
+			<h2 class="bordered blue">
+				<a ng-click="gotoTop()">Vissza a lap tetejére</a>
+			</h2>
+		</div>
 
 		<div class="footer-holder">
 			<footer class="container">
