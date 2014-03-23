@@ -94,6 +94,7 @@ class MapperFactory {
 
         $um = $m->addMapper(new ChildCollection("urls"));
         $um->addMapper(new Field('url'));
+        $um->addMapper(new Field('id'));
 
         $schm = $m->addMapper(new ChildCollection("schedulings"));
         $schm->addMapper(new Field("hourFrom"));

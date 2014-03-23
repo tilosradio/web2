@@ -13,6 +13,7 @@ return array(
             'RadioAdmin\Controller\Scheduling' => 'RadioAdmin\Controller\Scheduling',
             'RadioAdmin\Controller\Contribution' => 'RadioAdmin\Controller\Contribution',
             'RadioAdmin\Controller\Text' => 'RadioAdmin\Controller\Text',
+            'RadioAdmin\Controller\Url' => 'RadioAdmin\Controller\Url',
 
 
 
@@ -28,7 +29,8 @@ return array(
             require("route.episode.php"),
             require("route.scheduling.php"),
             require("route.contribution.php"),
-            require("route.text.php")
+            require("route.text.php"),
+            require("route.url.php")
 
 
 

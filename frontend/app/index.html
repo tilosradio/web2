@@ -7,8 +7,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Tilos Rádió</title>
-    <meta name="description" content="A Tilos Rádió egy non-profit közösségi rádió. Adástelefon: +36-1-215-3773. Frekvencia: 90.3Mhz">
+    <title ng:bind-template="Tilos Rádió : {{pageTitle}}">Tilos Rádió</title>
+    <meta  name="description" id="desc" content="A Tilos Rádió egy non-profit közösségi rádió. Adástelefon: +36-1-215-3773. Frekvencia: 90.3Mhz">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0 user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -92,9 +92,16 @@
 						<ul class="nav navbar-nav" ng-click="isCollapsed = !isCollapsed">
 							<li active-link="active"><a href="/index" >Főoldal</a></li>
 							<li active-link="active"><a href="/shows">Műsorok</a></li>
-							<li active-link="active"><a href="/archive">Archívum</a></li>
+							<li active-link="active"><a href="/archive">Archív</a></li>
 							<li active-link="active"><a href="/page/hangtar">Hangtár</a></li>
-							<!-- <li active-link="active"><a href="/page/150">Krónika</a></li> -->
+							<li class="extra-menu">
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Krónika</a>
+			          <ul class="extra-menu-content">
+			        		<li active-link="active"><a href="/page/extra">Sajtó</a></li>
+			        		<li active-link="active"><a href="/page/info">Tematikus napok</a></li>
+			        		<li active-link="active"><a href="/page/elerhetoseg">Mementó</a></li>
+<li active-link="active"><a href="/page/elerhetoseg">Legendárium</a></li>
+			          </ul></li>
 							<li active-link="active" class="highlight"><a href="/page/segits">Támogass</a></li>
 							<li class="extra-menu">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><div class="more-button">+</div></a>
@@ -121,7 +128,7 @@
 						<div class="brand-holder col-md-6">
 							<a href="/">
 							<img src="/images/logo.png" alt="Tilos Rádió" class="logo">
-							<h1>Tilos Rádió 90.3</h1>
+							<h1>Tilos Rádió</h1>
 							<h2><a href="/page/segits"><span id="adoszam">adószám: 18002454-2-43</a></span></h2>
 							</a>
 						</div>

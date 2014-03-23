@@ -100,6 +100,8 @@ class MapperTest extends \PHPUnit_Framework_TestCase
 
         $result = $mapper->map($a, $to);
 
+        //var_dump($to);
+
         $this->assertArrayHasKey("id", $to);
         $this->assertArrayHasKey("name", $to);
         $this->assertArrayNotHasKey("volatile", $to);

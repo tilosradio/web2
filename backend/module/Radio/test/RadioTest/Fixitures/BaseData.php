@@ -183,6 +183,16 @@ class BaseData implements FixtureInterface
         $epi->setText($l1);
         $manager->persist($epi);
 
+
+        $epi = new Episode();
+        $epi->setId(2);
+        $epi->setPlannedFrom(new DateTime("2013-01-21 10:30:00"));
+        $epi->setPlannedTo(new DateTime("2013-01-21 12:30:00"));
+        $epi->setRealFrom($epi->getPlannedFrom());
+        $epi->setRealTo($epi->getPlannedTo());
+        $epi->setShow($show);
+        $manager->persist($epi);
+
         $manager->flush();
 
         foreach (['Radio\Entity\Role', 'Radio\Entity\Author', 'Radio\Entity\User', 'Radio\Entity\Url', 'Radio\Entity\TextContent', 'Radio\Entity\Show', 'Radio\Entity\Scheduling', 'Radio\Entity\Episode'] as $type) {

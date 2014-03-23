@@ -4,6 +4,11 @@ namespace RadioAdmin\Controller;
 
 use DoctrineORMModule\Proxy\__CG__\Radio\Entity\TextContent;
 use Radio\Mapper\ArrayFieldSetter;
+use Radio\Mapper\ChildObject;
+use Radio\Mapper\Field;
+use Radio\Mapper\ObjectFieldSetter;
+use Radio\Mapper\ObjectMapper;
+use Radio\Mapper\StaticField;
 use Zend\View\Model\JsonModel;
 use Radio\Provider\EntityManager;
 use Radio\Mapper\MapperFactory;
@@ -12,11 +17,13 @@ use Radio\Mapper\MapperFactory;
 /**
  * @SWG\Resource(resourcePath="/episode",basePath="/api")
  */
-class Episode extends \Radio\Controller\BaseController {
+class Episode extends \Radio\Controller\BaseController
+{
 
     use EntityManager;
 
-    public function create($e) {
+    public function create($e)
+    {
         try {
             $id = $this->params()->fromRoute("id");
             $data = $this->getRawData($e);
@@ -108,82 +115,40 @@ class Episode extends \Radio\Controller\BaseController {
         }
     }
 
-    public function update($e) {
+    public function update($e)
+    {
 
         $id = $this->params()->fromRoute("id");
         $data = $this->getRawData($e);
 
         $episode = $this->getEntityManager()->find('Radio\Entity\Episode', $id);
-        $updated = "";
-        // validation
+
         if (is_null($episode)) {
             $this->getResponse()->setStatusCode(400);
             return new JsonModel(array("error" => "Episode does not exist."));
         }
 
+        $data = array('text'=>$data);
+        $mapper = new ObjectMapper(new ObjectFieldSetter());
+        $tm = $mapper->addMapper(new ChildObject("text","\Radio\Entity\TextContent"));
+        $tm->addMapper(new Field("title"));
+        $tm->addMapper(new Field("content"));
+        $tm->addMapper(StaticField::of("type","episode"));
+        $tm->addMapper(StaticField::of("format","normal"));
+        $tm->addMapper(StaticField::of("created",new \DateTime()));
+        $tm->addMapper(StaticField::of("modified",new \DateTime()));
+        $tm->addMapper(StaticField::of("author",$this->getCurrentUser()->getUserName()));
+        $tm->addMapper(StaticField::of("alias",''));
 
-        if (isset($data['plannedFrom'])) {
-            if (!is_numeric($data['plannedFrom'])) {
-                $this->getResponse()->setStatusCode(400);
-                return new JsonModel(array("error" => "Waiting dates in timestamp format (integer)."));
-            } else {
-                $plannedFrom = new \DateTime();
-                $plannedFrom->setTimestamp($data['plannedFrom']);
-                $episode->setPlannedFrom($plannedFrom);
-                $updated .= " PlannedFrom: " . $data['plannedFrom'];
-            }
-        }
-        if (isset($data['plannedTo'])) {
-            if (!is_numeric($data['plannedTo'])) {
-                $this->getResponse()->setStatusCode(400);
-                return new JsonModel(array("error" => "Waiting dates in timestamp format (integer)."));
-            } else {
-                $plannedTo = new \DateTime();
-                $plannedTo->setTimestamp($data['plannedTo']);
-                $episode->setPlannedTo($plannedTo);
-                $updated .= " PlannedTo: " . $data['plannedTo'];
-            }
-        }
-        if (isset($data['realFrom'])) {
-            if (!is_numeric($data['realFrom'])) {
-                $this->getResponse()->setStatusCode(400);
-                return new JsonModel(array("error" => "Waiting dates in timestamp format (integer)."));
-            } else {
-                $realFrom = new \DateTime();
-                $realFrom->setTimestamp($data['realFrom']);
-                $episode->setRealFrom($realFrom);
-                $updated .= " RealFrom: " . $data['realFrom'];
-            }
-        }
-        if (isset($data['realTo'])) {
-            if (!is_numeric($data['realTo'])) {
-                $this->getResponse()->setStatusCode(400);
-                return new JsonModel(array("error" => "Waiting dates in timestamp format (integer)."));
-            } else {
-                $realTo = new \DateTime();
-                $realTo->setTimestamp($data['realTo']);
-                $episode->setRealTo($realTo);
-                $updated .= " RealTo: " . $data['realTo'];
-            }
-        }
-        if (isset($data['title'])) {
-            $episode->getText()->setTitle($data['title']);
-            $episode->getText()->setCreated(new \DateTime());
-            $updated .= " title: " . $data['title'];
-        }
-
-        if (isset($data['content'])) {
-            $episode->getText()->setContent($data['content']);
-            $episode->getText()->setCreated(new \DateTime());
-            $updated .= " content updated ";
-        }
+        $mapper->map($data, $episode);
 
 
         $this->getEntityManager()->flush();
-        return new JsonModel(array("success" => true, "updated" => $updated, 'data' => array('id' => $episode->getId())));
+        return new JsonModel(array("success" => true, 'data' => array('id' => $episode->getId())));
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         try {
             $episode = $this->getEntityManager()->find('Radio\Entity\Episode', $id);
             if (is_null($episode)) {

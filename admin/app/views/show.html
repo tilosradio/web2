@@ -8,7 +8,7 @@
 </section>
 
 <section>
-  <h2>Beosztás</h2>
+  <h2>Beosztás <a ng-show="user.role.name == 'admin'" class="btn btn-warning" ng-href="/new/scheduling/{{show.id}}">Új</a></h2>
 
   <table class="table">
     <thead>
@@ -40,12 +40,40 @@
     </tr>
     </tbody>
   </table>
-  <a ng-show="user.role.name == 'admin'" class="btn btn-warning" ng-href="/new/scheduling/{{show.id}}">Új</a>
+
+
+</section>
+
+
+<section>
+    <h2>Linkek <a ng-show="user.role.name == 'admin'" class="btn btn-warning" ng-href="/new/url/{{show.id}}">Új</a></h2>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Link</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="url in show.urls">
+            <td><a ng-href="{{url.url}}">{{url.url}}</a></td>
+            <td ng-show="user.role.name == 'admin'"><a class="btn btn-danger"
+                                                       ng-href="/edit/url/{{url.id}}/{{show.id}}">Szerkesztés</a></td>
+            <td
+                    ng-show="user.role.name == 'admin'"><a class="btn btn-danger"
+                                                           ng-confirm-click
+                                                           ng-click="deleteUrl(url.id)">Törlés</a></td>
+        </tr>
+        </tbody>
+    </table>
+
 
 </section>
 
 <section>
-  <h2>Műsorkészítők</h2>
+  <h2>Műsorkészítők <a ng-show="user.role.name == 'admin'" class="btn btn-warning" ng-href="/new/contribution">Új</a></h2>
 
   <p>
   <ul ng-repeat="contributor in show.contributors">
@@ -53,7 +81,7 @@
             ng-confirm-click ng-show="user.role.name == 'admin'" class="btn btn-danger" ng-click="deleteContribution(contributor.id)">Törlés</a></li>
   </ul>
   </p>
-  <a ng-show="user.role.name == 'admin'" class="btn btn-warning" ng-href="/new/contribution">Új</a>
+
 
 </section>
 

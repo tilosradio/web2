@@ -34,7 +34,7 @@ angular.module('tilosAdmin').config(['$routeProvider', function ($routeProvider)
   });
 }]);
 angular.module('tilosAdmin')
-    .controller('ShowCtrl', function ($scope, data, API_SERVER_ENDPOINT, $http, $rootScope, $location, schedulingList, Schedulings, Contributions, Shows) {
+    .controller('ShowCtrl', function ($scope, data, API_SERVER_ENDPOINT, $http, $rootScope, $location, schedulingList, Schedulings, Contributions, Shows, Urls) {
       $scope.show = data;
       $scope.server = API_SERVER_ENDPOINT;
       $scope.schedulings = schedulingList.data;
@@ -46,6 +46,10 @@ angular.module('tilosAdmin')
         $http.get(API_SERVER_ENDPOINT + "/api/v0/show/" + $scope.show.id + "/schedulings").success(function (data) {
           $scope.schedulings = data;
         });
+      }
+      $scope.deleteUrl = function (id) {
+            Urls.remove({'id': id,'showId':$scope.show.id});
+            $scope.show = Shows.get({id: $scope.show.id});
       }
       $scope.prev = function () {
         $scope.currentShowPage--;

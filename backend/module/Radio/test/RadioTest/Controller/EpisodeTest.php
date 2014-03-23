@@ -78,6 +78,27 @@ class EpisodeTest extends TestBase {
 
     }
 
+    public function testEpisodeGetWithNullText() {
+        //when
+        $this->request->setUri("/api/episode/2");
+        $this->request->setMethod("get");
+        $this->routeMatch->setParam('id', 2);
+        $this->routeMatch->setParam('action', 'get');
+
+
+
+        $result = $this->controller->dispatch($this->request);
+        $response = $this->controller->getResponse();
+        //then
+        $episode = $result->getVariables();
+        //var_dump($episode);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertTrue(count($response) > 0);
+        $this->assertEquals(2, $episode['id']);
+
+    }
+
 }
 
 ?>

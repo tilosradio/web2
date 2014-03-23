@@ -40,7 +40,7 @@ class Episode {
     /**
      * So called 'Adasnaplo'
      *
-     * @ORM\OneToOne(targetEntity="TextContent")
+     * @ORM\OneToOne(targetEntity="TextContent",cascade={"persist"})
      * @ORM\JoinColumn(name="textcontent_id", referencedColumnName="id")
      */
     protected $text;

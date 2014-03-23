@@ -97,6 +97,43 @@ class EpisodeTest extends TestBase {
 
     }
 
+    public function testEpisodeEditWithTextAfterNull() {
+        $start = mktime(10, 0, 0, 10, 21, 2013);
+        $end = mktime(12, 0, 0, 10, 21, 2013);
+        //when
+        $this->request->setUri("/api/episode/2");
+        $this->request->setMethod("put");
+        $this->request->getHeaders()->addHeaderLine("content-type: application/json");
+        $this->request->setContent(Json::encode(
+            [
+                'content' => 'new content',
+                'title' => 'ccc'
+            ]));
+        $this->routeMatch->setParam('id', 2);
+        $this->routeMatch->setParam('action', 'update');
+
+
+
+        $result = $this->controller->dispatch($this->request);
+        $response = $this->controller->getResponse();
+
+        //then
+        $episode = $result->getVariables();
+        //var_dump($episode);
+
+        $this->assertTrue($episode['success']);
+        $id = $episode['data']['id'];
+
+        $persisted = $this->em->find("\Radio\Entity\Episode", $id);
+        $this->assertEquals($id, $persisted->getId());
+
+        $this->assertNotNull($persisted->getText());
+        $this->assertEquals("ccc", $persisted->getText()->getTitle());
+        $this->assertEquals("new content", $persisted->getText()->getContent());
+
+
+    }
+
     public function testEpisodeCreateWithText() {
         $start = mktime(10, 0, 0, 10, 28, 2013);
         $end = mktime(12, 0, 0, 10, 28, 2013);

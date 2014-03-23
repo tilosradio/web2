@@ -12,5 +12,17 @@ return array(
             ),
         )
     ),
+    'text-new' => array(
+        'type' => 'Radio\Util\CustomSegmentRouter',
+        'options' => array(
+            'method' => 'POST',
+            'route' => '/api/v0/text',
+            'permission' => 'admin',
+            'defaults' => array(
+                'controller' => 'RadioAdmin\Controller\Text',
+                'action' => 'create'
+            ),
+        )
+    ),
 
 );

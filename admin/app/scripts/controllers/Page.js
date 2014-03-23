@@ -22,6 +22,11 @@ angular.module('tilosAdmin').config(['$routeProvider', function ($routeProvider)
                 return Texts.get({id: $route.current.params.id});
             },
         }});
+
+    $routeProvider.when('/new/page', {
+        templateUrl: 'views/page-form.html',
+        controller: 'TextNewCtrl'
+        });
 }]);
 
 
@@ -44,6 +49,17 @@ angular.module('tilosAdmin')
                 httpCache.remove(API_SERVER_ENDPOINT + '/api/v0/text/' + $scope.text.id);
                 httpCache.remove(API_SERVER_ENDPOINT + '/api/v0/show');
                 $location.path('/page/' + $scope.text.id);
+            });
+        }
+    }
+);
+
+angular.module('tilosAdmin')
+    .controller('TextNewCtrl', function ($http, $routeParams, API_SERVER_ENDPOINT, $location, $scope, Texts) {
+        $scope.text = {};
+        $scope.save = function () {
+            $http.post(API_SERVER_ENDPOINT + '/api/v0/text', $scope.text).success(function (data) {
+                $location.path('/page/' + data.data.id);
             });
         }
     }

@@ -12,7 +12,30 @@ tilos.weekStart = function (date) {
   return new Date(date.setDate(first));
 };
 
-tilos.config(['$routeProvider', function ($routeProvider) {
+
+tilos.factory('Meta', function($rootScope, $rootElement) {
+    return {
+        setTitle: function(newTitle) {
+            $rootScope.pageTitle = newTitle
+        },
+        setDescription: function(newDesc) {
+            var metaDesc = angular.element(document.querySelector("#desc"));
+            metaDesc.attr('content', newDesc);
+        }
+
+    };
+});
+
+tilos.run(function($rootScope, Meta) {
+  $rootScope.$on('$locationChangeStart', function (evt, next) {
+        Meta.setTitle("");
+        Meta.setDescription("");
+
+    });
+
+});
+
+tilos.config(function($routeProvider) {
   $routeProvider.when('/archive', {
     templateUrl: 'partials/program.html',
     controller: 'ProgramCtrl'
@@ -35,7 +58,8 @@ tilos.config(['$routeProvider', function ($routeProvider) {
     templateUrl: '/partials/404.html',
     controller: '404Ctrl'
   });
-}]);
+
+});
 
 var server = window.location.protocol + '//' + window.location.hostname;
 if (window.location.port && window.location.port !== '9000') {

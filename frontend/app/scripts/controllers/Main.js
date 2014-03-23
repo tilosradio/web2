@@ -22,4 +22,7 @@ angular.module('tilosApp').controller('MainCtrl', function ($scope, FeedService,
       $http.get(API_SERVER_ENDPOINT + "/api/v0/episode/last").success(function (data) {
         $scope.last = data;
       });
+      $http.get(API_SERVER_ENDPOINT + "/api/v0/text/lead").success(function (data) {
+        $scope.lead = data;
+      });
     });

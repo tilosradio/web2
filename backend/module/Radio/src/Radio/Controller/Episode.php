@@ -148,7 +148,7 @@ class Episode extends BaseController
             $qb = $this->getEntityManager()->createQueryBuilder();
             $qb->select('e', 't', 's')
                 ->from('\Radio\Entity\Episode', 'e')
-                ->join('e.text', 't')
+                ->leftJoin('e.text', 't')
                 ->join('e.show', 's')
                 ->where('e.id = :id');
 

@@ -1,4 +1,14 @@
 <section class="col-md-6 main" role="main">
+
+  <div ng-show="lead"  class="panel panel-default">
+      <div class="panel-heading">
+{{lead.title}}
+      </div>
+      <div class="panel-body" ng-bind-html="lead.formatted">
+      </div>
+  </div>
+
+
   <div ng-show="next.length" class="program-guides">
     <h2 class="blue">Műsorajánló</h2>
     <div class="episode-next episode-list" data-ng-repeat="episode in next">

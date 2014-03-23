@@ -30,7 +30,7 @@ class Text extends \Radio\Controller\BaseController
             }
 
             $mapper = new ObjectMapper(new ObjectFieldSetter());
-            $f = new Field("title");
+            $mapper->addMapper(Field::of("title")->required());
             $mapper->addMapper(Field::of("content")->required());
             $mapper->addMapper(Field::of("alias")->required());
 
@@ -39,6 +39,34 @@ class Text extends \Radio\Controller\BaseController
 
             $this->getEntityManager()->flush();
             return new JsonModel(array("success" => true));
+        } catch (\Exception $ex) {
+            $this->getResponse()->setStatusCode(500);
+            return new JsonModel(array("error" => $ex->getMessage()));
+        }
+    }
+
+    public function create($e)
+    {
+        try {
+            $data = $this->getRawData($e);
+
+            $mapper = new ObjectMapper(new ObjectFieldSetter());
+            $mapper->addMapper(Field::of("title")->required());
+            $mapper->addMapper(Field::of("content")->required());
+            $mapper->addMapper(Field::of("alias")->required());
+
+            $text = new \Radio\Entity\TextContent();
+            $text = new \Radio\Entity\TextContent();
+            $text->setType('page');
+            $text->setFormat('normal');
+            $text->setCreated(new \DateTime());
+            $text->setModified(new \DateTime());
+            $text->setAuthor($this->getCurrentUser()->getUsername());
+            $mapper->map($data, $text);
+
+            $this->getEntityManager()->persist($text);
+            $this->getEntityManager()->flush();
+            return new JsonModel(array("success" => true, "data" => array("id" => $text->getId())));
         } catch (\Exception $ex) {
             $this->getResponse()->setStatusCode(500);
             return new JsonModel(array("error" => $ex->getMessage()));

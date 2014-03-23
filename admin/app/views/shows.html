@@ -1,3 +1,12 @@
+<div class="form-horizontal row instant-search" role="form">
+    <div class="form-group col-sm-6">
+        <label for="quicksearch" class="col-xs-2 control-label">Keresés</label>
+        <div class="col-xs-10">
+            <input type="search" id="quicksearch" class="form-control" placeholder="Keresés a műsorok között"  ng-model="quicksearch">
+        </div>
+    </div>
+</div>
+
 <div ng-show="user.author">
   <h1>Saját műsorok</h1>
   <table class="table">
@@ -16,10 +25,10 @@
   </table>
 </div>
 <h1 ifAdmin>Összes műsor
-  <a ng-show="user.role.name == 'admin'" class="btn btn-danger" role="btn" ng-href="/new/show">Új műsor</a></h1></h1>
+  <a ng-show="user.role.name == 'admin'" class="btn btn-danger" role="btn" ng-href="/new/show">Új műsor</a></h1>
 
 <table ifAdmin class="table">
-  <tr ng-repeat="show in shows">
+  <tr ng-repeat="show in shows | filter:quicksearch">
     <td><a ng-href="/show/{{show.id}}">{{show.name}}</a></td>
   </tr>
 </table>
