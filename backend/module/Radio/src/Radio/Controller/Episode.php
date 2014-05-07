@@ -6,6 +6,7 @@ use DoctrineORMModule\Proxy\__CG__\Radio\Entity\TextContent;
 use Radio\Mapper\ArrayFieldSetter;
 use Radio\Mapper\ChildObject;
 use Radio\Mapper\DateField;
+use Radio\Mapper\EpisodeResourceURLField;
 use Radio\Mapper\EpisodeURLField;
 use Radio\Mapper\Field;
 use Radio\Mapper\InternalLinkField;
@@ -60,10 +61,8 @@ class Episode extends BaseController
 
             $q = $qb->getQuery();
 
-
-            $episodes = $q->getArrayResult();
             $result = [];
-
+            $episodes = $q->getArrayResult();
             $this->episodeSuggestionMapper()->map($episodes, $result, new ArrayFieldSetter());
 
             return new JsonModel($result);
@@ -81,6 +80,8 @@ class Episode extends BaseController
         $em->addMapper(new Field("title"));
         $em->addMapper(new DateField("created"));
         $m->addMapper(new EpisodeURLField());
+        $m->addMapper(new EpisodeResourceURLField());
+
         return $m;
     }
 

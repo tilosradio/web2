@@ -59,9 +59,40 @@ class TextContent {
     protected $author;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="textcontents", cascade="persist")
+     * @ORM\JoinTable(name="tag_textcontent")
+     **/
+    protected $tags = [];
+
+    /**
      * @ORM\Column(type="string", length=60) 
      * */
     protected $alias;
+
+    /**
+     * @return mixed
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param mixed $tags
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+    }
+
+    /**
+     * @param mixed $tags
+     */
+    public function addTags($tag)
+    {
+        $this->tags[] = $tag;
+    }
+
 
     public function getId() {
         return $this->id;

@@ -2,9 +2,11 @@
 
 namespace RadioAdmin\Controller;
 
+use Radio\Mapper\ChildCollection;
 use Radio\Mapper\Field;
 use Radio\Mapper\ObjectFieldSetter;
 use Radio\Mapper\ObjectMapper;
+use Radio\Mapper\Tag;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
 use Radio\Provider\EntityManager;
@@ -29,10 +31,17 @@ class Text extends \Radio\Controller\BaseController
                 return new JsonModel(array("error" => "Not found"));
             }
 
+
+
             $mapper = new ObjectMapper(new ObjectFieldSetter());
             $mapper->addMapper(Field::of("title")->required());
             $mapper->addMapper(Field::of("content")->required());
             $mapper->addMapper(Field::of("alias")->required());
+            $mapper->addMapper(new Tag("content", $this->getEntityManager()));
+
+            $mt = $mapper->addMapper(new ChildCollection("tags"));
+            $mt->addMapper(Field::of("name"));
+
 
             $mapper->map($data, $text);
             $text->setModified(new \DateTime());
@@ -50,12 +59,15 @@ class Text extends \Radio\Controller\BaseController
         try {
             $data = $this->getRawData($e);
 
-            $mapper = new ObjectMapper(new ObjectFieldSetter());
+            $mapper = new ObjectMapper(new ObjectFieldSetter($this->getEntityManager()));
             $mapper->addMapper(Field::of("title")->required());
             $mapper->addMapper(Field::of("content")->required());
             $mapper->addMapper(Field::of("alias")->required());
+            $mapper->addMapper(new Tag("content", $this->getEntityManager()));
 
-            $text = new \Radio\Entity\TextContent();
+            $mt = $mapper->addMapper(new ChildCollection('tags', "\Radio\Entity\Tag"));
+            $mt->addMapper(Field::of("name"));
+
             $text = new \Radio\Entity\TextContent();
             $text->setType('page');
             $text->setFormat('normal');

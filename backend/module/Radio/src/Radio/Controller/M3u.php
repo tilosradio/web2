@@ -10,42 +10,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 class M3u extends AbstractActionController
 {
 
-    static public function getPrevHalfHour($time)
-    {
-        $processed = getdate($time);
-        $min = $processed['minutes'];
-        if ($min >= 30) {
-            $min -= 30;
-        }
-        return $time - $min * 60;
-    }
 
-
-    public function getMp3Links($start, $duration)
-    {
-        $res = [];
-        $from = M3u::getPrevHalfHour($start);
-        $end = $from + $duration * 60;
-
-        $curr = $from;
-
-        for ($i = $from; $i < $end; $i += 30 * 60) {
-            $d = getdate($i);
-            $timestr = sprintf("%02d%02d", $d['hours'], $d['minutes']);
-            $filename = sprintf("/%02d/%02d/%02d/tilosradio-%02d%02d%02d-%s.mp3", $d['year'], $d['mon'], $d['mday'], $d['year'],
-                $d['mon'], $d['mday'], $timestr);
-            $res[] = array("filename" => $filename, "file" => "http://archive.tilos.hu/online" . $filename, 'epoch' => $i,
-                'datearray' => $d);
-            if ($curr % 100 < 25) {
-                $curr += 30;
-            } else {
-                $curr += 70;
-            }
-        }
-
-
-        return $res;
-    }
 
     public function downloadAction()
     {
@@ -75,8 +40,8 @@ class M3u extends AbstractActionController
 	public function getM3Ufile($start, $duration)
 	{
         $out="";
-		$from = M3u::getPrevHalfHour($start);
-		foreach ($this->getMp3Links($start, $duration) as $resource) {
+		$from = EpisodeUtil::getPrevHalfHour($start);
+		foreach (EpisodeUtil::getMp3StreamLinks($start, $duration) as $resource) {
 			$d = $resource['datearray'];
 			$timestr = sprintf("%02d%02d", $d['hours'], $d['minutes']);
 			$out .= sprintf("#EXTINF:1805,Tilos %02d.%02d.%02d %s\n", $d['year'], $d['mon'], $d['mday'], $timestr);
@@ -122,7 +87,7 @@ class M3u extends AbstractActionController
 
 
         $filesize = 0;
-        foreach ($this->getMp3Links($start, $duration) as $resource) {
+        foreach (EpisodeUtil::getMp3Links($start, $duration) as $resource) {
             //passthru($resource['file']);
             $fn = "../archive" . $resource['filename'];
             if (!file_exists($fn)) {
@@ -135,7 +100,7 @@ class M3u extends AbstractActionController
 
         }
         header("Content-Length: " . $filesize);
-        foreach ($this->getMp3Links($start, $duration) as $resource) {
+        foreach (EpisodeUtil::getMp3Links($start, $duration) as $resource) {
             //passthru($resource['file']);
             $this->chunked_copy("../archive" . $resource['filename']);
         }

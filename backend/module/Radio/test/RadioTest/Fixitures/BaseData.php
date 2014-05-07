@@ -9,6 +9,7 @@ use Radio\Entity\Episode;
 use Radio\Entity\Scheduling;
 use Radio\Entity\Show;
 use Radio\Entity\Author;
+use Radio\Entity\Tag;
 use Radio\Entity\TextContent;
 use Radio\Entity\Url;
 use Radio\Entity\User;
@@ -20,7 +21,7 @@ class BaseData implements FixtureInterface
     public function load(ObjectManager $manager)
     {
 
-        foreach (['Radio\Entity\Role', 'Radio\Entity\Author', 'Radio\Entity\User', 'Radio\Entity\Url', 'Radio\Entity\TextContent', 'Radio\Entity\Show', 'Radio\Entity\Scheduling', 'Radio\Entity\Episode'] as $type) {
+        foreach (['Radio\Entity\Role', 'Radio\Entity\Author', 'Radio\Entity\User', 'Radio\Entity\Url', 'Radio\Entity\TextContent', 'Radio\Entity\Show', 'Radio\Entity\Scheduling', 'Radio\Entity\Episode', 'Radio\Entity\Tag'] as $type) {
             $metadata = $manager->getClassMetaData($type);
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
             $metadata->setIdGenerator(new \Doctrine\ORM\Id\AssignedGenerator());
@@ -184,6 +185,7 @@ class BaseData implements FixtureInterface
         $manager->persist($epi);
 
 
+
         $epi = new Episode();
         $epi->setId(2);
         $epi->setPlannedFrom(new DateTime("2013-01-21 10:30:00"));
@@ -193,9 +195,16 @@ class BaseData implements FixtureInterface
         $epi->setShow($show);
         $manager->persist($epi);
 
+
+
+        $tag = new Tag();
+        $tag->setId(1);
+        $tag->setName("txag");
+        $manager->persist($tag);
+
         $manager->flush();
 
-        foreach (['Radio\Entity\Role', 'Radio\Entity\Author', 'Radio\Entity\User', 'Radio\Entity\Url', 'Radio\Entity\TextContent', 'Radio\Entity\Show', 'Radio\Entity\Scheduling', 'Radio\Entity\Episode'] as $type) {
+        foreach (['Radio\Entity\Role', 'Radio\Entity\Author', 'Radio\Entity\User', 'Radio\Entity\Url', 'Radio\Entity\TextContent', 'Radio\Entity\Show', 'Radio\Entity\Scheduling', 'Radio\Entity\Episode', 'Radio\Entity\Tag'] as $type) {
             $metadata = $manager->getClassMetaData($type);
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_AUTO);
             $metadata->setIdGenerator(new \Doctrine\ORM\Id\IdentityGenerator());

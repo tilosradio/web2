@@ -1,6 +1,6 @@
 'use strict';
 angular.module('tilosApp')
-  .controller('ShowCtrl', function ($scope, $routeParams, API_SERVER_ENDPOINT, $http, validateUrl, $rootScope, $location, Meta) {
+  .controller('ShowCtrl', function (Player, $scope, $routeParams, API_SERVER_ENDPOINT, $http, validateUrl, $rootScope, $location, Meta) {
     $http.get(API_SERVER_ENDPOINT + '/api/v0/show/' + $routeParams.id, {cache: true}).success(function (data) {
       $scope.show = data;
       $scope.server = API_SERVER_ENDPOINT;
@@ -12,6 +12,8 @@ angular.module('tilosApp')
       $scope.likeURL = validateUrl.getValidUrl('http://www.facebook.com/plugins/like.php?href=http%3A%2F%2F' + tilosHost + '%2Fshow%2F' + $scope.show.alias + '&width&layout=standard&action=like&show_faces=true&share=true');
 
       $scope.currentShowPage = 0;
+
+      $scope.play = Player.play;
 
       $scope.prev = function () {
         $scope.currentShowPage--;

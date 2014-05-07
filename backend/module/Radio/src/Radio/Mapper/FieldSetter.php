@@ -13,7 +13,7 @@ interface FieldSetter
 
     public function add(&$container, $propertyName, &$value);
 
-    public function createEmptyChild($type);
+    public function findChild($from, $type);
 
 }
 

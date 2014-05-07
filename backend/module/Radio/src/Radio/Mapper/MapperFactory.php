@@ -81,6 +81,7 @@ class MapperFactory {
         $em->addMapper(new DateField("plannedTo"));
         $em->addMapper(new InternalLinkField("m3uUrl", $context['baseUrl']));
         $em->addMapper(new Field("url", $context['baseUrl']));
+        $em->addMapper(new EpisodeResourceURLField());
         $emt = $em->addMapper(new ChildObject("text"));
         $emt->addMapper(new Field("title"));
         $emt->addMapper(new Field("format"));

@@ -25,7 +25,7 @@ class ChildCollection implements Mapper
                 $setter->set($to, $this->name, $k);
             }
             foreach ($from[$this->name] as &$child) {
-                $n = $setter->createEmptyChild($this->type);
+                $n = $setter->findChild($child, $this->type);
                 foreach ($this->mappers as $mapper) {
                     $mapper->map($child, $n, $setter);
                 }

@@ -297,9 +297,12 @@ module.exports = function (grunt) {
               'template/{,*/}*.*',
               'bower_components/sass-bootstrap/fonts/*.*',
               'bower_components/angular/*.*',
+	      'bower_components/jquery/*.*',
               'bower_components/angular-route/*.*',
               'bower_components/angular-sanitize/*.*',
               'partials/{,*/}*.*',
+	      'jplayer*.*',
+              'jplayer/{,*/}*.*',
               'doc/{,*/}*.*'
             ]
           }

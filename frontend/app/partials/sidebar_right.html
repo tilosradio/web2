@@ -1,4 +1,4 @@
-<div class="box  actual-shows-box">
+<div class="box actual-shows-box">
 		<h2>{{now| date: "yyyy.MM.dd."}}</h2>
 		<table class="table actual-shows" >
 			<tr ng-repeat="episode in episodes" class="{{(current.show.id == episode.show.id) && 'actual'|| ''}}" >
@@ -10,7 +10,9 @@
 	</div>
 	<div class="box box-simple">
 		<h3>Adástelefon</h3>
-		<a href="tel:+3612153773" class="tel">(+36 1) 215 37 73</a>
+		<div class="centered">
+			<a href="tel:+3612153773" class="tel">(+36 1) 215 37 73</a>
+		</div>
 		<a href="http://tilos.hu/chat/" target="_blank" class="btn btn-danger btn-block btn-lg" role="button">
 			<span class="icon-chat2"></span>Belépés a chatre
 		</a>

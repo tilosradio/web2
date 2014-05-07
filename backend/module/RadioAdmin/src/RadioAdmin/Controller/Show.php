@@ -31,6 +31,7 @@ class Show extends BaseController
         $mapper = new ObjectMapper(new ObjectFieldSetter());
         $mapper->addMapper(new Field("name"));
         $mapper->addMapper(new Field("description"));
+        $mapper->addMapper(new Field("definition"));
 
         if ($this->isAdmin()) {
           $mapper->addMapper(new Field("status"));
@@ -56,6 +57,7 @@ class Show extends BaseController
             $mapper = new ObjectMapper(new ObjectFieldSetter());
             $mapper->addMapper(new Field("name"));
             $mapper->addMapper(new Field("description"));
+            $mapper->addMapper(new Field("definition"));
             if ($this->isAdmin()) {
                 $mapper->addMapper(new Field("status"));
                 $mapper->addMapper(new Field("type"));

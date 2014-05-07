@@ -21,6 +21,14 @@
       </div>
     </div>
 
+      <div class="control-group" ng-show="user.role.name == 'admin'">
+          <label class="control-label" for="definition">Rövid leírás</label>
+
+          <div class="controls">
+              <input id="definition" name="definition" type="text" class="input-xlarge" ng-model="show.definition" style="width: 600px;">
+          </div>
+      </div>
+
     <div class="control-group" ng-show="user.role.name == 'admin'">
           <label class="control-label" for="Status">Status</label>
 

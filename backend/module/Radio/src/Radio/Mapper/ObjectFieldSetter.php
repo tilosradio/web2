@@ -52,8 +52,14 @@ class ObjectFieldSetter implements FieldSetter
         $container->$setter($value);
     }
 
-    public function createEmptyChild($type)
+    public function findChild($from, $type)
     {
+        if ($this->em != null && $type !=null && array_key_exists("id",$from)) {
+            $original = $this->em->find($type, $from['id']);
+            if ($original) {
+                return $original;
+            }
+        }
         return new $type();
     }
 }

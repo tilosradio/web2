@@ -38,8 +38,8 @@
 <div class="box">
   <h2><a href="http://hirek.tilos.hu" target="_blank">Tilos hírek</a></h2>
     <article class="news-lead" ng-repeat="feed in feeds">
-      <h3><a href="{{feed.link}}" target="_blank">{{feed.title}}</a></h3>
-      <p><img ng-src="{{feed.mediaGroups[0].contents[0].url}}" alt="{{feed.title}}" ng-show="{{feed.mediaGroups[0].contents[0].url}}"></a><span ng-bind-html="feed.content"></span></p>
+      <h3><a ng-href="{{feed.link}}" target="_blank">{{feed.title}}</a></h3>
+      <p><img  ng-src="{{feed.mediaGroups[0].contents[0].url}}" alt="{{feed.title}}" ng-show="{{feed.mediaGroups[0].contents[0].url}}"></a><span ng-bind-html="feed.content"></span></p>
   </article>
   <a href="http://hirek.tilos.hu" target="_blank">további Tilos hírek &rarr;</a>
 </div>

@@ -213,7 +213,38 @@ class EpisodeUtil {
         return $str;
     }
 
+    static function getMp3StreamLinks($start, $duration)
+        {
+        $res = [];
+        $from = EpisodeUtil::getPrevHalfHour($start);
+        $end = $from + $duration * 60;
+
+        $curr = $from;
+
+        for ($i = $from; $i < $end; $i += 30 * 60) {
+            $d = getdate($i);
+            $timestr = sprintf("%02d%02d", $d['hours'], $d['minutes']);
+            $filename = sprintf("/%02d/%02d/%02d/tilosradio-%02d%02d%02d-%s.mp3", $d['year'], $d['mon'], $d['mday'], $d['year'],
+                $d['mon'], $d['mday'], $timestr);
+            $res[] = array("filename" => $filename, "file" => "http://archive.tilos.hu/online" . $filename, 'epoch' => $i,
+                'datearray' => $d);
+            if ($curr % 100 < 25) {
+                $curr += 30;
+            } else {
+                $curr += 70;
+            }
+        }
+        return $res;
+     }
+
+    static function getPrevHalfHour($time){
+            $processed = getdate($time);
+            $min = $processed['minutes'];
+            if ($min >= 30) {
+                $min -= 30;
+            }
+            return $time - $min * 60;
+        }
 
 }
-
 ?>

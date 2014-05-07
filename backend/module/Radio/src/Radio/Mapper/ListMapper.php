@@ -25,7 +25,7 @@ class ListMapper implements Mapper
     public function map(&$from, &$to, $setter)
     {
         foreach ($from as $item) {
-            $newValue = $setter->createEmptyChild($this->type);
+            $newValue = $setter->findChild($item, $this->type);
             foreach ($this->mappers as $mapper) {
                 $mapper->map($item, $newValue, $setter);
             }

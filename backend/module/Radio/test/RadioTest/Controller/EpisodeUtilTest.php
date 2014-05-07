@@ -2,6 +2,7 @@
 
 use RadioTest\Bootstrap;
 use Radio\Controller\EpisodeUtil;
+use Radio\Controller\M3u;
 
 class EpisodeUtilTest extends \RadioTest\Controller\TestBase {
 
@@ -95,6 +96,14 @@ class EpisodeUtilTest extends \RadioTest\Controller\TestBase {
         $this->assertEquals('m3u/20040102/0304/0435/tilos.m3u',EpisodeUtil::m3uUrlLinkFromDate($date,$end));
     }
 
+
+    public function testgetPrevHalfHour() {
+        $start = new \DateTime("2013-10-25 10:22:00");
+        $res = EpisodeUtil::getPrevHalfHour($start->getTimestamp());
+        $expected_end = new \DateTime("2013-10-25 10:00:00");
+        $expected = $expected_end->getTimestamp();
+        $this->assertEquals($expected, $res);
+    }
 }
 
 ?>

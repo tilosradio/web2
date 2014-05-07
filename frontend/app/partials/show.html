@@ -30,6 +30,9 @@
                 <span ng-if="episode.text">{{episode.text.title}}</a></span>
             </b>
 
+            <a ng-show="experimental" class="stream-link pull-right" ng-click="play(episode.resources.stream)" target="_self">
+                <i class="icon-volume-up"></i> online
+            </a>
             <a ng-show="episode.m3uUrl" class="pull-right listen-show" ng-href="{{episode.m3uUrl}}" target="_self">
             	<i class="icon-volume-up"></i> Meghallgat
             </a>

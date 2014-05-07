@@ -4,6 +4,7 @@
       <a class="btn btn-danger" role="btn" ng-href="/edit/show/{{show.id}}">Szerkesztés</a>
     </if-show-admin>
   </h1>
+  <blockquote ng-bind-html="show.definition"></blockquote>
   <div ng-bind-html="show.description"></div>
 </section>
 
