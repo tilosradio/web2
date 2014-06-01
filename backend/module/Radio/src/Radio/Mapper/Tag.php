@@ -28,17 +28,33 @@ class Tag implements Mapper
         $this->em = $em;
     }
 
+    public function addMatches($matches, $type, &$result)
+    {
+        foreach ($matches[1] as $match) {
+            $t = new \Radio\Entity\Tag();
+            $t->setType($type);
+            $t->setName($match);
+            $result[] = $t;
+        }
+    }
+
     public function extractTags($content)
     {
         $matches = [];
         $result = [];
-        preg_match_all("/#\w+/", $content, $matches);
+        $w = "[\w+&;]";
+        preg_match_all("/#(" . $w . "+)/", $content, $matches);
+        $this->addMatches($matches, \Radio\Entity\Tag::$GENERIC, $result);
 
-        foreach ($matches[0] as $match) {
-            $t = new \Radio\Entity\Tag();
-            $t->setName(substr($match, 1));
-            $result[] = $t;
-        }
+        preg_match_all("/\#\{(.+?)\}/", $content, $matches);
+        $this->addMatches($matches, \Radio\Entity\Tag::$GENERIC, $result);
+
+        preg_match_all("/@(" . $w . "+)/", $content, $matches);
+        $this->addMatches($matches, \Radio\Entity\Tag::$PERSON, $result);
+
+        preg_match_all("/\@\{(.+?)\}/", $content, $matches);
+        $this->addMatches($matches, \Radio\Entity\Tag::$PERSON, $result);
+
         return $result;
     }
 
@@ -59,10 +75,10 @@ class Tag implements Mapper
                 $result = $q->getArrayResult();
                 if ($result) {
                     //if $tag has already been exists
-                    $dt[] = array("id" => $result[0]['id'], "name" => $tag->getName());
+                    $dt[] = array("id" => $result[0]['id'], "name" => $tag->getName(), 'type' => $tag->getType());
                 } else {
                     //else
-                    $dt[] = array('name' => $tag->getName());
+                    $dt[] = array('name' => $tag->getName(), 'type' => $tag->getType());
                 }
 
             }

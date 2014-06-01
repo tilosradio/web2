@@ -6,20 +6,34 @@
     <!-- Form Name -->
     <!-- Text input-->
     <div class="form-group">
-      <label for="plannedFrom">Kezdet</label>
+      <label for="plannedFrom">Tervezett kezdet</label>
 
       <p id="plannedFrom">{{episode.plannedFrom * 1000 | date:'yyyy-MM-dd HH:ss'}}</p>
 
     </div>
     <!-- Text input-->
     <div class="form-group">
-      <label for="plannedTo">Vég</label>
+      <label for="plannedTo">Tervezett vég</label>
       <p id="plannedTo">{{episode.plannedTo * 1000 | date:'yyyy-MM-dd HH:ss'}}</p>
     </div>
+
+      <!-- Text input-->
+      <div class="form-group">
+          <label for="plannedFrom">Valós kezdet</label>
+          <input class="form-control" id="realFrom" name="realFrom" type="time" ng-model="realFrom">
+
+      </div>
+      <!-- Text input-->
+      <div class="form-group">
+          <label for="realTo">Valós vég</label>
+          <input class="form-control" id="realTo" name="realTo" type="time" ng-model="realTo">
+      </div>
+
+
     <!-- Text input-->
     <div class="form-group">
       <label for="title">Cím</label>
-      <input class="form-control" id="title" name="title" type="text" class="" ng-model="episode.title" width="" style="width: 50ch;">
+      <input class="form-control" id="title" name="title" type="text" class="" ng-model="episode.text.title" width="" style="width: 50ch;">
 
     </div>
 
@@ -33,7 +47,7 @@
     <div class="form-group">
       <label class="control-label" for="content">Leírás</label>
 
-      <div text-angular="text-angular" ng-model="episode.content"></div>
+      <div text-angular="text-angular" ng-model="episode.text.content"></div>
     </div>
 
   </fieldset>

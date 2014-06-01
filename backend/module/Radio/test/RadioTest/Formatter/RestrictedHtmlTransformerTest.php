@@ -14,7 +14,8 @@ class RestrictedHtmlTransformerTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals("<p>asasdasd</p>", $r->format("<p class=\"fekete\">asasdasd</p>"));
         $this->assertEquals("asd", $r->format('<tab heading="qwe">asd</tab>'));
         $this->assertEquals("<p>asasdaeesd</p>", $r->format("<p class=\"fekete\">asasda<script>ee</script>sd</p>"));
-        $this->assertEquals('<a href="http://asd.hu">qwe</a>', $r->format('<a href="http://asd.hu" target="blank">qwe</a>'));
+        $this->assertEquals('<a href="http://asd.hu" target="blank">qwe</a>', $r->format('<a href="http://asd.hu" target="blank">qwe</a>'));
+
 
 
         $this->assertEquals('<p>asd</p>', $r->format('asd<iframe></iframe>'));

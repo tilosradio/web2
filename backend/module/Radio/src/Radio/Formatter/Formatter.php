@@ -8,10 +8,13 @@ class Formatter
 
     public function __construct()
     {
+        $default = new CompositeFormatter();
+        $default->addFormatter(new RestrictedHtmlTransformer());
+        $default->addFormatter(new TagFormatter());
         $this->transformers = [
-            'legacy' => new RestrictedHtmlTransformer(),
-            'normal' => new RestrictedHtmlTransformer(),
-            'html' => new RestrictedHtmlTransformer()
+            'legacy' => $default,
+            'normal' => $default,
+            'html' => $default,
         ];
     }
 
@@ -24,4 +27,5 @@ class Formatter
         }
     }
 }
+
 ?>

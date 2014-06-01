@@ -98,6 +98,45 @@ class TextTest extends TestBase
 
 
     }
+    public function testUpdatePageWithTags()
+    {
+        $this->user = $this->createUser(1, "admin", "admin");
+        //given
+
+        $this->routeMatch->setParam('action', 'update');
+        $this->request->setMethod("put");
+        $this->routeMatch->setParam('id', 2);
+
+        $this->request->getHeaders()->addHeaderLine("content-type: application/json");
+        $this->request->setContent(Json::encode(
+            ['title' => 'xxx', 'alias' => 'blabla', 'content' => "Ahoj #bela ez itt qwe\n #txag"]));
+
+        //when
+        $result = $this->controller->dispatch($this->request);
+        $response = $this->controller->getResponse();
+        //then
+
+        $res = $result->getVariables();
+        //var_dump($res);
+
+        $this->assertTrue($res['success']);
+        $d = $this->em->find("\Radio\Entity\TextContent", 2);
+
+        //var_dump($d);
+
+        $this->assertNotEmpty($d);
+        $this->assertEquals(2, sizeof($d->getTags()));
+        $this->assertEquals("xxx", $d->getTitle());
+        $this->assertEquals("blabla", $d->getAlias());
+        $this->assertEquals("Ahoj #bela ez itt qwe\n #txag", $d->getContent());
+        $this->assertEquals(2, sizeof($d->getTags()));
+        $this->assertEquals("bela", $d->getTags()[0]->getName());
+        $this->assertEquals("txag", $d->getTags()[1]->getName());
+
+
+
+    }
+
 
     
 

@@ -39,7 +39,7 @@ class Text extends \Radio\Controller\BaseController
             $mapper->addMapper(Field::of("alias")->required());
             $mapper->addMapper(new Tag("content", $this->getEntityManager()));
 
-            $mt = $mapper->addMapper(new ChildCollection("tags"));
+            $mt = $mapper->addMapper(new ChildCollection('tags', "\Radio\Entity\Tag"));
             $mt->addMapper(Field::of("name"));
 
 

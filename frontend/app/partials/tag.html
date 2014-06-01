@@ -1,0 +1,22 @@
+<section class="col-md-9 main" role="main">
+    <h1>{{tag.name}}</h1>
+    <p>A cimke az alábbi műsorokhoz kapcsolódik:</p>
+    <table class="table">
+        <tr ng-repeat="episode in tag.episodes">
+            <td><a ng-href="/episode/{{episode.show.alias}}/{{episode.plannedFrom * 1000 | date:'yyyy/MM/dd'}}">{{episode.plannedFrom
+                * 1000 | date:'yyyy-MM-dd'}}</a>
+            </td>
+            <td>
+                {{episode.text.title}}
+            </td>
+            <td>
+                {{episode.show.name}}
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<aside class="col-md-3">
+    <div ng-include src="'partials/sidebar_right.html'"></div>
+</aside>

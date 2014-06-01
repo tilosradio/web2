@@ -3,6 +3,8 @@
 
 class Mp3Streamer
 {
+
+
     static public function getPrevHalfHour($time)
     {
         $processed = getdate($time);
@@ -26,7 +28,7 @@ class Mp3Streamer
     {
         $res = [];
         $from = Mp3Streamer::getPrevHalfHour($start);
-        $end = $from + $duration * 60;
+        $end = $start + $duration * 60;
 
         $curr = $from;
 
@@ -45,11 +47,11 @@ class Mp3Streamer
         }
 
 
-        return $res;
+        return [$start - $from, $res];
     }
 
 
-    function chunked_copy($from)
+    function chunked_copy($from, $offset = 0)
     {
         # 1 megabyte buffer
         $buffer_size = 1048576;
@@ -59,6 +61,9 @@ class Mp3Streamer
             echo "--$from--";
             die("file open error");
         }
+        if ($offset) {
+            fseek($fin, $offset);
+        }
         while (!feof($fin)) {
             echo fread($fin, $buffer_size);
         }
@@ -67,6 +72,8 @@ class Mp3Streamer
 
     public function combinedMp3Action()
     {
+
+        $archiveLocation = "/home/elek/projects/tilos/backend/archive-files/online";
 
         $uri = $_SERVER['REQUEST_URI'];
         $matches = [];
@@ -84,11 +91,17 @@ class Mp3Streamer
         header("Content-Type: audio/mpeg");
         header("Content-Disposition: attachment; filename=\"$filename.mp3\"");
 
+        $origin = $this->getMp3Links($start, $duration);
+        //skip the first $offset seconds.
+        $offset = $origin[0];
+        $files = $origin[1];
+        //convert to byte
+        $offset = (int)($offset * 38.28125 * 836);
 
         //check the files and caclucate the sizes
         $filesize = 0;
-        foreach ($this->getMp3Links($start, $duration) as $resource) {
-            $fn = "../archive-files/online" . $resource['filename'];
+        foreach ($files as $resource) {
+            $fn = $archiveLocation . $resource['filename'];
             if (!file_exists($fn)) {
                 header('HTTP/1.0 404 Not Found');
                 die("Archive is missing: " . $fn);
@@ -98,11 +111,11 @@ class Mp3Streamer
             }
 
         }
-
+        $filesize -= $offset;
         //stream the content to the browser
         header("Content-Length: " . $filesize);
-        foreach ($this->getMp3Links($start, $duration) as $resource) {
-            $this->chunked_copy("../archive-files/online" . $resource['filename']);
+        for ($i = 0; $i < sizeof($files); $i++) {
+            $this->chunked_copy($archiveLocation . $files[$i]['filename'], $i == 0 ? $offset: 0);
         }
 
         die("");

@@ -21,11 +21,15 @@ class BaseData implements FixtureInterface
     public function load(ObjectManager $manager)
     {
 
+        //$manager->getConfiguration()->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
+
         foreach (['Radio\Entity\Role', 'Radio\Entity\Author', 'Radio\Entity\User', 'Radio\Entity\Url', 'Radio\Entity\TextContent', 'Radio\Entity\Show', 'Radio\Entity\Scheduling', 'Radio\Entity\Episode', 'Radio\Entity\Tag'] as $type) {
             $metadata = $manager->getClassMetaData($type);
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
             $metadata->setIdGenerator(new \Doctrine\ORM\Id\AssignedGenerator());
         }
+
+
 
         $r1 = new Role();
         $r1->setId(1);
@@ -33,6 +37,17 @@ class BaseData implements FixtureInterface
 
         $manager->persist($r1);
         $manager->flush();
+
+
+        $tag = new Tag();
+        $tag->setId(1);
+        $tag->setName("txag");
+        $manager->persist($tag);
+
+        $tag2 = new Tag();
+        $tag2->setId(2);
+        $tag2->setName("tag2");
+        $manager->persist($tag2);
 
 
         $r2 = new Role();
@@ -132,6 +147,7 @@ class BaseData implements FixtureInterface
         $page->setType('page');
         $page->setFormat('legacy');
         $page->setAuthor("szabi");
+        $page->setTags([$tag]);
         $manager->persist($page);
 
 
@@ -145,6 +161,7 @@ class BaseData implements FixtureInterface
         $l1->setType('log');
         $l1->setFormat('legacy');
         $l1->setAuthor("szabi");
+        $l1->setTags([$tag2]);
         $manager->persist($l1);
 
 
@@ -197,10 +214,7 @@ class BaseData implements FixtureInterface
 
 
 
-        $tag = new Tag();
-        $tag->setId(1);
-        $tag->setName("txag");
-        $manager->persist($tag);
+
 
         $manager->flush();
 

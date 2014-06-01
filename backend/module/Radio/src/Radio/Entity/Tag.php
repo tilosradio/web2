@@ -5,20 +5,28 @@ namespace Radio\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity 
+ * @ORM\Entity
  * @ORM\Table(name="tag")
  * */
-class Tag {
+class Tag
+{
+    public static $PERSON = 1;
+    public static $GENERIC = 0;
 
     /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer") 
-     * @ORM\GeneratedValue 
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      * */
     protected $id;
 
     /**
-     * @ORM\Column(type="string") 
+     * @ORM\Column(type="integer")
+     * */
+    protected $type = 0;
+
+    /**
+     * @ORM\Column(type="string")
      * */
     protected $name;
 
@@ -74,6 +82,22 @@ class Tag {
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
 

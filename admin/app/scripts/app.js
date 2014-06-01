@@ -54,15 +54,26 @@ angular.module('tilosAdmin').run(function ($rootScope, $location, $http, API_SER
     return (/.*password_reset(\?.*)?/g.exec(url) || endsWith(url, '/password_reminder') || endsWith(url, '/login'));
   }
   $rootScope.$on('$locationChangeStart', function (evt, next) {
-
-
     if (!('user' in $rootScope)) {
       if (!freeAccess(next)) {
-        $location.path("/login");
         //evt.preventDefault();
+        $location.path("/login");
+
       }
     }
 
+  });
+
+  $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+      if (!('user' in $rootScope)) {
+            // no logged user, we should be going to #login
+            if ( next.templateUrl == "views/login.html" ) {
+                // already going to #login, no redirect needed
+            } else {
+                // not going to #login, we should redirect now
+                $location.path( "/login" );
+            }
+        }
   });
 
   $rootScope.initialPath = $location.path();

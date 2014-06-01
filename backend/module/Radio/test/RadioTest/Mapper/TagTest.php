@@ -61,4 +61,28 @@ class TagTest extends TestBase
 
     }
 
+    public function testMixed()
+    {
+
+        //given
+        $a = [];
+        $a['content'] = "#contentx asd asd\nvalami @person we #{Ham burger}";
+        $t = new Tag("content", $this->em);
+        $to = [];
+
+        //when
+        $t->map($a, $to, new ArrayFieldSetter());
+
+        //then
+        $from = $a;
+        $this->assertArrayHasKey("tags", $from);
+        $this->assertEquals(3, sizeof($from['tags']));
+        $this->assertEquals("contentx", $from['tags'][0]['name']);
+        $this->assertEquals("person", $from['tags'][2]['name']);
+        $this->assertEquals("Ham burger", $from['tags'][1]['name']);
+        $this->assertEquals(1, $from['tags'][2]['type']);
+
+
+
+    }
 }

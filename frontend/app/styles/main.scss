@@ -224,12 +224,12 @@ img{
         @media all and (min-width: $screen-sm){
           font-size: 14px;
           > a{
-            padding-bottom: 5px;
+            margin-bottom: -10px;
             padding-top: 5px;
           }
           >.extraLink{
 				padding-bottom:0px;
-				margin:0px;
+				margin:0 0 10px 0;
 			}
         }
     }
@@ -266,10 +266,9 @@ img{
       padding-bottom: 13px;
     }
     .extraLink{
-
 		padding-bottom:0px;
 		margin-top: 10px;
-		margin-bottom: 13px;
+		margin-bottom: 20px;
 	}
    .extra-menu-content{
       background: $navbar-color;
@@ -344,7 +343,7 @@ img{
 }
 
 .englishLink a{
-  color:#797979;
+  color:$light-color;
   font-size:16px;
 }
 

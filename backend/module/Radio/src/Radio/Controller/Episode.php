@@ -4,6 +4,7 @@ namespace Radio\Controller;
 
 use DoctrineORMModule\Proxy\__CG__\Radio\Entity\TextContent;
 use Radio\Mapper\ArrayFieldSetter;
+use Radio\Mapper\ChildCollection;
 use Radio\Mapper\ChildObject;
 use Radio\Mapper\DateField;
 use Radio\Mapper\EpisodeResourceURLField;
@@ -91,8 +92,11 @@ class Episode extends BaseController
         $this->simpleEpisodeElementMapper($m);
         $em = $m->addMapper(new ChildObject("text"));
         $em->addMapper(new Field("title"));
+        $em->addMapper(new Field("id"));
         $em->addMapper(new \Radio\Mapper\TextContent());
         $em->addMapper(new DateField("created"));
+        $tm = $em->addMapper(new ChildCollection("tags"));
+        $tm->addMapper(Field::of("name"));
         return $m;
     }
 
@@ -101,10 +105,14 @@ class Episode extends BaseController
         $m->addMapper(new Field("id"));
         $m->addMapper(new DateField("plannedFrom"));
         $m->addMapper(new DateField("plannedTo"));
+        $m->addMapper(new DateField("realFrom"));
+        $m->addMapper(new DateField("realTo"));
+
         $m->addMapper(new InternalLinkField("m3uUrl", $this->getServerUrl()));
 
         $sm = $m->addMapper(new ChildObject("show"));
         $sm->addMapper(new Field("name"));
+        $sm->addMapper(new Field("alias"));
         $m->addMapper(new InternalLinkField("m3uUrl", $this->getServerUrl()));
         $sm->addMapper(new Field("id"));
         $sm->addMapper(new Field("alias"));
@@ -147,9 +155,10 @@ class Episode extends BaseController
             $id = $this->getIdentifier($e->getRouteMatch(), $e->getRequest());
 
             $qb = $this->getEntityManager()->createQueryBuilder();
-            $qb->select('e', 't', 's')
+            $qb->select('e', 't', 's', 'tg')
                 ->from('\Radio\Entity\Episode', 'e')
                 ->leftJoin('e.text', 't')
+                ->leftJoin('t.tags', 'tg')
                 ->join('e.show', 's')
                 ->where('e.id = :id');
 

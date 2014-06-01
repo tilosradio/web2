@@ -13,7 +13,8 @@ return array(
             'Radio\Controller\Text' => 'Radio\Controller\Text',
             'Radio\Controller\M3u' => 'Radio\Controller\M3u',
             'Radio\Controller\User' => 'Radio\Controller\User',
-            'Radio\Controller\Atom' => 'Radio\Controller\Atom'
+            'Radio\Controller\Atom' => 'Radio\Controller\Atom',
+            'Radio\Controller\Tag' => 'Radio\Controller\Tag'
         ),
     ),
     'router' => array(
@@ -22,7 +23,8 @@ return array(
             require("route.show.php"),
             require("route.author.php"),
             require("route.episode.php"),
-            require("route.text.php")
+            require("route.text.php"),
+            require("route.tag.php")
 
 
 

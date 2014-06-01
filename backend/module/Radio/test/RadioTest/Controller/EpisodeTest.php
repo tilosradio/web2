@@ -74,6 +74,7 @@ class EpisodeTest extends TestBase {
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertTrue(count($response) > 0);
         $this->assertEquals(1, $episode['id']);
+        $this->assertEquals(1, sizeof($episode['text']['tags']));
 
 
     }

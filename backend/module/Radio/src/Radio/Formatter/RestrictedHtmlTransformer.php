@@ -38,7 +38,7 @@ class RestrictedHtmlTransformer
         $this->allowedTags['h3'] = [];
         $this->allowedTags['strong'] = [];
         $this->allowedTags['img'] = ['src'];
-        $this->allowedTags['a'] = ['href'];
+        $this->allowedTags['a'] = ['href','target'];
 
         $this->customHandlers['iframe'] = array($this, 'iframe');
     }
