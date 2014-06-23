@@ -1,0 +1,34 @@
+<html>
+<head>
+
+</head>
+<body>
+<script src="sm2/soundmanager2.js"></script>
+<script type="text/javascript">
+    var sound;
+    soundManager.setup({
+        url: '/sm2/swf/',
+//        flashVersion: 9, // optional: shiny features (default = 8)
+        // optional: ignore Flash where possible, use 100% HTML5 mode
+        preferFlash: false,
+        onready: function () {
+            sound = soundManager.createSound({
+                id: 'track',
+                url: 'http://localhost/mp3/tilos-20140604-101145-120000.mp3',
+                whileplaying: function () {
+        //            soundManager._writeDebug('sound '+this.id+' playing, '+this.position+' of '+this.duration);
+                },
+                whileloading: function () {
+          //          soundManager._writeDebug('sound '+this.id+' loading, '+this.bytesLoaded+' of '+this.bytesTotal)
+                }
+            });
+            sound.play();
+        },
+
+
+    });
+</script>
+<button onclick="soundManager.pause('track');">pause</button>
+<button onclick="soundManager.resume('track');" href="#">play</button>
+</body>
+</html>

@@ -40,7 +40,8 @@ gulp.task('assets', function() {
      'app/template/**/*',
      'app/images/**/*',
      'app/styles/fonts/**',
-     'app/jplayer/**/*'],
+     'app/jplayer/**/*',
+     'app/sm2/**/*'],
         {base: 'app'})
   .pipe(gulp.dest(distDir + '/www'));    
 });
