@@ -1,9 +1,0 @@
-<section class="col-md-9 main" role="main" >
-    <h1>{{page.title}}
-      <span ng-show="user && user.role== 'ADMIN'">
-              <a class="btn btn-danger" role="btn" ng-href="/edit/page/{{page.id}}">Szerkesztés</a>
-      </span>
-    </h1>
-
-    <span ng-bind-html="page.formatted"/>
-</section>
