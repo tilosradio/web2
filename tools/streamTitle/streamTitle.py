@@ -37,10 +37,8 @@ def get_show_title(current_show):
         current_show.get('plannedFrom', time.time()))
     planned_to = get_hour_minute_string(
         current_show.get('plannedTo', time.time() + 1 * 60 * 60))
-    return u'%s (%s-%s)' % (
+    return u'%s' % (
         show_name,
-        planned_from,
-        planned_to
     )
 
 
@@ -75,7 +73,7 @@ if not current_show:
 
 
 show_title = get_show_title(current_show)
-show_string = u'%s %s' % (
+show_string = u'%s - %s' % (
     show_title,
     config_dict.get('title-append-text')
 )
