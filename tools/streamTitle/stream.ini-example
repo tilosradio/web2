@@ -1,7 +1,0 @@
-[tilos-icecast]
-hostname = stream.tilos.hu
-port = 80
-username = admin
-password = somepassword
-streams = /tilos:/tilos_high.ogg:/tilos_low.ogg:/tilos_128.mp3
-title-append-text = Tilos Rádió FM90.3, tel.: +3612153773

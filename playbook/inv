@@ -1,2 +1,0 @@
-[all]
-localhost:2222	ansible_ssh_user=vagrant
