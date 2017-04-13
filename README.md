@@ -1,4 +1,4 @@
-web2
+Tilos Radio public services.
 ====
 
 This project was the original home of the public web site of Radio Tilos, but we separated the codebase to multiple git repositories.
